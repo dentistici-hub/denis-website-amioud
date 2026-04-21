@@ -1,0 +1,276 @@
+---
+/**
+ * Home — Amioud.
+ * Section order (brief.json + concept.md):
+ *   hero (signature) → brand-story-intro → fragrance-preview (staggered)
+ *   → editorial-split onyx band "Da Grasse a Perugia" → quiz-cta → rivenditori-cta → footer
+ *
+ * Motion per motion-plan.md §2:
+ *   - hero:              HeroSignature (video + 2× ClipMaskReveal)
+ *   - brand-story:       fade-up paragraphs + ClipMaskReveal pull-quote (direction right)
+ *   - fragrance-preview: ClipMaskReveal cards + ParallaxLayer y=0.15 on bottles
+ *   - editorial-split:   KenBurnsImage on visione-editorial-1 + fade-up prose (onyx bg)
+ *   - quiz-cta:          static hairline underline
+ *   - rivenditori-cta:   static hairline underline
+ *   - footer:            static
+ *
+ * Layout Moves (concept.md §6):
+ *   1. Asymmetric hero (66/34 claim-left, bottle-right, pull-quote tri-element)
+ *   2. Staggered asymmetric fragrance preview (marginLeft/marginRight offsets — Variation A)
+ *   3. Full-bleed onyx band (editorial-split breaks cream wash)
+ *   4. Pull-quote section at display size (hero pull-quote in Cormorant 300 italic)
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteNav from '../components/SiteNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import HeroSignature from '../components/HeroSignature.astro';
+import FragrancePreview from '../components/FragrancePreview.astro';
+import ClipMaskReveal from '@motion/ClipMaskReveal.astro';
+import KenBurnsImage from '@motion/KenBurnsImage.astro';
+import { site, nav, schema } from '@data/site';
+import { shopifyHref } from '@data/shopify-links';
+
+const description = site.description;
+---
+
+<BaseLayout title={site.name} description={description} site={site} schema={schema}>
+  <SiteNav
+    brandName={site.name}
+    links={nav}
+    logoSrc="/images/logo.png"
+    currentPath={Astro.url.pathname.replace(import.meta.env.BASE_URL.replace(/\/$/, ''), '') || '/'}
+  />
+
+  <main>
+    {/* ================= HERO (signature) ================= */}
+    <HeroSignature
+      videoSrc="/videos/hero.mp4"
+      posterSrc="/images/hero-poster.jpg"
+      eyebrow="Violet Collection"
+      headline="Il primo Extrait de Parfum al mondo per capelli."
+      subhead="Violet Collection. Tre fragranze, una concentrazione al 20%."
+      pullQuote="Un profumo che non si indossa, si respira."
+      bottleSrc="/images/fragrance-preview-amber-dusk.png"
+      bottleAlt="Amber Dusk — flacone Amioud"
+      bottleHref="/fragranze/amber-dusk"
+    />
+
+    {/* ================= BRAND STORY INTRO ================= */}
+    <section class="section brand-intro" aria-labelledby="brand-intro-title">
+      <div class="container brand-intro__grid">
+        <div class="brand-intro__side">
+          <p class="eyebrow" data-animate="fade-up">Visione</p>
+          <h2 id="brand-intro-title" class="display brand-intro__title" data-animate="fade-up">
+            Gioielleria della testa.
+          </h2>
+        </div>
+
+        <div class="brand-intro__body prose" data-animate-group="fade-up">
+          <p>
+            Diciotto mesi di ricerca fra Grasse e Perugia per un gesto nuovo: profumare i capelli
+            con la densità di un extrait, la leggerezza di un rituale.
+          </p>
+          <p>Il risultato è brevettato. La concentrazione è al 20%.</p>
+          <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/visione`} class="cta-link">Leggi la visione</a>
+        </div>
+      </div>
+    </section>
+
+    {/* ================= FRAGRANCE PREVIEW (staggered) ================= */}
+    <FragrancePreview />
+
+    {/* ================= EDITORIAL SPLIT — ONYX BAND ================= */}
+    {/* Why full-bleed onyx: concept.md §5 color law — one section breaks the cream
+        wash with the onyx fg, creating rhythm (dense/spacious pacing). */}
+    <section class="section editorial-split" aria-labelledby="editorial-split-title">
+      <div class="container editorial-split__grid">
+        <div class="editorial-split__image-col">
+          {/* Why KenBurnsImage 28s loop: per motion-plan.md §7 — slow enough to be
+              almost subliminal; carries ETEREO/ONIRICO without a scroll-scrub. */}
+          <KenBurnsImage
+            src="/images/visione-editorial-1.jpg"
+            alt="Violet Collection — tre flaconi Amioud su podi di marmo con rami di lavanda"
+            direction="drift"
+            duration={28}
+            aspectRatio="4 / 5"
+          />
+        </div>
+
+        <div class="editorial-split__text-col">
+          <p class="eyebrow eyebrow--on-dark" data-animate="fade-up">Filiera</p>
+          <h2 id="editorial-split-title" class="display editorial-split__title" data-animate="fade-up">
+            Da Grasse a Perugia.
+          </h2>
+          <div class="prose prose--on-dark" data-animate-group="fade-up">
+            <p>
+              Le essenze nascono fra le maison di Grasse, cuore storico della profumeria. La formula
+              e l'imbottigliamento sono affidati ai Laboratori Sabatel di Perugia.
+            </p>
+            <p>
+              La logistica parte da Fiano Romano. Una filiera breve, dichiarata, italo-francese.
+            </p>
+          </div>
+          <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/visione`} class="cta-link cta-link--on-dark" data-animate="fade-up">
+            Leggi la storia
+          </a>
+        </div>
+      </div>
+    </section>
+
+    {/* ================= QUIZ CTA ================= */}
+    {/* Static: motion-plan.md §2 "conversion beat — zero motion, hairline underline only". */}
+    <section class="section cta-band cta-band--quiz" aria-labelledby="quiz-title">
+      <div class="container cta-band__grid">
+        <div class="cta-band__text" data-animate-group="fade-up">
+          <h2 id="quiz-title" class="display cta-band__title">Trova la tua fragranza.</h2>
+          <p class="cta-band__subhead">Cinque domande. Nessuna registrazione. Un profumo che ti somiglia.</p>
+          <a href={shopifyHref('quizStart')} class="cta-link cta-band__cta" rel="noopener">
+            Inizia il quiz
+          </a>
+        </div>
+      </div>
+    </section>
+
+    {/* ================= RIVENDITORI CTA ================= */}
+    {/* Static twin — two static CTAs in sequence = trust via restraint. */}
+    <section class="section cta-band cta-band--rivenditori" aria-labelledby="rivenditori-title">
+      <div class="container cta-band__grid">
+        <div class="cta-band__text" data-animate-group="fade-up">
+          <h2 id="rivenditori-title" class="display cta-band__title">Dove trovarci.</h2>
+          <p class="cta-band__subhead">Profumerie selettive e saloni partner in Italia.</p>
+          <div class="cta-band__actions">
+            <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/rivenditori`} class="cta-link">
+              Vedi i rivenditori
+            </a>
+            <a href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/rivenditori#form`} class="cta-link cta-link--ghost">
+              Diventa rivenditore
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter site={site} />
+</BaseLayout>
+
+<script>
+  import '../scripts/scroll-animations';
+</script>
+
+<style>
+  /* Brand intro — split 34/66, asymmetric feels editorial. */
+  .brand-intro {
+    background: var(--color-bg);
+  }
+  .brand-intro__grid {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+  .brand-intro__side {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    position: sticky;
+    top: 120px;
+  }
+  .brand-intro__title {
+    font-size: var(--text-h1);
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+    max-width: 14ch;
+  }
+  .brand-intro__body p {
+    font-size: var(--text-lead);
+    line-height: 1.55;
+    color: var(--color-fg);
+    max-width: 54ch;
+  }
+  .brand-intro__body p + p,
+  .brand-intro__body .cta-link {
+    margin-top: 1em;
+  }
+  .brand-intro__body .cta-link {
+    display: inline-flex;
+  }
+
+  /* Editorial-split onyx band */
+  .editorial-split {
+    background: var(--color-bg-dark);
+    color: var(--color-fg-on-dark);
+  }
+  .editorial-split__grid {
+    display: grid;
+    grid-template-columns: 0.95fr 1fr;
+    gap: var(--space-xl);
+    align-items: center;
+  }
+  .editorial-split__image-col :global(.kenburns) {
+    border-radius: 0;
+  }
+  .editorial-split__text-col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+  .editorial-split__title {
+    color: var(--color-fg-on-dark);
+    font-size: var(--text-h1);
+    letter-spacing: -0.015em;
+    line-height: 1.02;
+  }
+  .prose--on-dark p {
+    color: var(--color-fg-on-dark-muted);
+    max-width: 48ch;
+  }
+
+  /* CTA bands — one cream, one deeper cream, creating a soft cadence */
+  .cta-band--quiz { background: var(--color-bg); }
+  .cta-band--rivenditori { background: var(--color-bg-card); }
+  .cta-band__grid {
+    display: grid;
+    place-items: center;
+  }
+  .cta-band__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    text-align: center;
+    max-width: 48ch;
+  }
+  .cta-band__title {
+    font-size: var(--text-h1);
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+  }
+  .cta-band__subhead {
+    font-size: var(--text-lead);
+    color: var(--color-fg-muted);
+    line-height: 1.4;
+  }
+  .cta-band__cta {
+    align-self: center;
+    margin-top: 0.75rem;
+  }
+  .cta-band__actions {
+    display: inline-flex;
+    gap: var(--space-md);
+    margin-top: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  @media (max-width: 820px) {
+    .brand-intro__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+    .brand-intro__side { position: static; }
+    .editorial-split__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+  }
+</style>

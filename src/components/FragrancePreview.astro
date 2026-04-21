@@ -1,0 +1,179 @@
+---
+/**
+ * FragrancePreview — home staggered asymmetric cards.
+ * Variation A layout: margin shifts 24/120/48 left + 100/24/80 right
+ * (not symmetric — the asymmetry IS the character, concept.md §7).
+ * Motion: ClipMaskReveal per card 800ms power3.out stagger 60ms,
+ *   oversized Cormorant numerals entering via data-animate fade-up stagger 60ms,
+ *   light ParallaxLayer y=0.15 on bottle packshot.
+ */
+import ClipMaskReveal from '@motion/ClipMaskReveal.astro';
+import ParallaxLayer from '@motion/ParallaxLayer.astro';
+import { fragrances } from '@data/fragrances';
+import { shopifyHref } from '@data/shopify-links';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const r = (p: string) => (p.startsWith('/') ? `${base}${p}` : p);
+
+// Staggered offsets per Variation A. The asymmetric set is the visual rhythm.
+const offsets = [
+  { marginLeft: '1.5rem', marginRight: '6.25rem' }, // 01
+  { marginLeft: '7.5rem', marginRight: '1.5rem'  }, // 02
+  { marginLeft: '3rem',   marginRight: '5rem'    }, // 03
+];
+---
+
+<section class="frag-preview section" aria-labelledby="frag-preview-title">
+  <div class="container frag-preview__head">
+    <p class="eyebrow frag-preview__eyebrow" data-animate="fade-up">Violet Collection</p>
+    <h2 id="frag-preview-title" class="frag-preview__title display" data-animate="fade-up">
+      Tre fragranze. Tre storie.
+    </h2>
+  </div>
+
+  <div class="container frag-preview__grid">
+    {fragrances.map((f, i) => (
+      <article
+        class="frag-card"
+        style={`margin-left: ${offsets[i].marginLeft}; margin-right: ${offsets[i].marginRight};`}
+      >
+        {/* Why: signature ClipMaskReveal per card — 800ms power3.out, 60ms cascade. */}
+        <ClipMaskReveal
+          direction="up"
+          duration={0.8}
+          ease="power3.out"
+          delay={i * 0.06}
+          start="top 85%"
+        >
+          <a href={r(`/fragranze/${f.slug}`)} class="frag-card__anchor" aria-label={`${f.name} — ${f.mood}`}>
+            <div class="frag-card__numeral-wrap">
+              <span class="frag-card__numeral display" data-animate="fade-up">{f.number}</span>
+            </div>
+
+            {/* Why: subtle vertical parallax y=0.15 on the bottle packshot.
+                Per motion-plan.md §7 — scroll-coupled drift, nebbia carried through. */}
+            <ParallaxLayer y={0.15}>
+              <img
+                src={r(f.previewImage)}
+                alt={`${f.name} — ${f.mood}`}
+                class="frag-card__image"
+                loading="lazy"
+                decoding="async"
+              />
+            </ParallaxLayer>
+
+            <h3 class="frag-card__name display">{f.name}</h3>
+            <p class="frag-card__mood"><em>{f.mood}</em></p>
+            <span class="cta-link cta-link--ghost frag-card__cta">Scopri</span>
+          </a>
+        </ClipMaskReveal>
+
+        <a
+          href={shopifyHref(f.shopifyKey)}
+          class="cta-link frag-card__buy"
+          rel="noopener"
+          data-animate="fade-up"
+        >Acquista</a>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .frag-preview {
+    background: var(--color-bg);
+  }
+  .frag-preview__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xl);
+    max-width: 36ch;
+  }
+  .frag-preview__title {
+    font-size: var(--text-h1);
+    letter-spacing: -0.015em;
+    line-height: 1.02;
+  }
+
+  .frag-preview__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+    align-items: start;
+  }
+
+  .frag-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .frag-card__anchor {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: inherit;
+  }
+
+  .frag-card__numeral-wrap {
+    overflow: hidden;
+  }
+  .frag-card__numeral {
+    font-size: var(--text-numeral);
+    letter-spacing: -0.025em;
+    line-height: 0.85;
+    color: var(--color-fg);
+    opacity: 0.88;
+    display: inline-block;
+  }
+
+  .frag-card__image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    background: color-mix(in srgb, var(--color-bg-elevated) 70%, var(--color-bg));
+    margin-block: 0.5rem 0.75rem;
+  }
+
+  .frag-card__name {
+    font-size: var(--text-h3);
+    letter-spacing: -0.005em;
+    line-height: 1.15;
+    color: var(--color-fg);
+  }
+
+  .frag-card__mood em {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: var(--fw-display-italic);
+    font-size: var(--text-sm);
+    color: var(--color-fg-muted);
+  }
+
+  .frag-card__cta {
+    margin-top: 0.5rem;
+    align-self: start;
+    border-bottom: 1px solid var(--color-fg);
+    padding-bottom: 0.2em;
+  }
+
+  .frag-card__buy {
+    align-self: start;
+    margin-top: 0.25rem;
+    color: var(--color-fg-muted);
+    font-size: var(--text-sm);
+  }
+
+  @media (max-width: 820px) {
+    .frag-preview__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+    .frag-card {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+  }
+</style>

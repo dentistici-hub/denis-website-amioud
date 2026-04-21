@@ -1,0 +1,87 @@
+/* Amioud tokens — cream tri-tone + onyx, Cormorant Garamond 500 + Inter variable.
+   Locked by concept.md §5 and type-system.md §2/§4/§10. */
+
+:root {
+  /* Layout */
+  --max-width: 1320px;
+  --gutter: clamp(1.5rem, 1rem + 3vw, 4.5rem);
+
+  /* Easing & duration (concept = quiet register) */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 220ms;
+  --duration-normal: 560ms;
+  --duration-slow: 900ms;
+
+  /* Space scale */
+  --space-xs: clamp(0.3rem, 0.2rem + 0.3vw, 0.55rem);
+  --space-sm: clamp(0.55rem, 0.4rem + 0.5vw, 0.85rem);
+  --space-md: clamp(1.1rem, 0.8rem + 1vw, 1.7rem);
+  --space-lg: clamp(2.25rem, 1.2rem + 3vw, 4.5rem);
+  --space-xl: clamp(3.5rem, 2rem + 5vw, 7.5rem);
+  --space-2xl: clamp(5.5rem, 3.5rem + 7vw, 12rem);
+  --space-section: clamp(6rem, 4rem + 6vw, 11rem);
+
+  --leading-tight: 1.05;
+  --leading-snug: 1.2;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.85;
+
+  --z-bg: 0;
+  --z-content: 1;
+  --z-overlap: 2;
+  --z-decorative: 5;
+  --z-interactive: 10;
+  --z-header: 100;
+  --z-overlay: 200;
+
+  /* ====== COLOR LAW — concept.md §5 ====== */
+  /* Cream tri-tone (warm → near-white → deeper) */
+  --color-bg:          #f6f4ef;  /* primary cream wash */
+  --color-bg-elevated: #fbfaf6;  /* near-white, used at hero bottom gradient + elevated surfaces */
+  --color-bg-card:     #f3eee6;  /* deeper cream for bands: quiz + related-fragrances */
+  --color-bg-dark:     #1a171b;  /* onyx — editorial band (Da Grasse a Perugia) */
+
+  /* Foreground ramp */
+  --color-fg:          #1a171b;
+  --color-fg-muted:    rgba(26, 23, 27, 0.70);
+  --color-fg-faint:    rgba(26, 23, 27, 0.44);
+  --color-fg-on-dark:  #f6f4ef;
+  --color-fg-on-dark-muted: rgba(246, 244, 239, 0.72);
+
+  /* Accents — usage severely restricted per concept.md §5 */
+  --color-accent:         #5a3e8c;  /* violet: hover TextLink + active nav underline only. NEVER as fill. */
+  --color-accent-hover:   #4a3275;
+  --color-accent-dark:    #2f1f4d;
+  --color-accent-secondary: #b89768;  /* gold: favicon + loader glyph + 'A' watermark only */
+
+  /* Dividers */
+  --color-border:        rgba(26, 23, 27, 0.20);
+  --color-border-strong: rgba(26, 23, 27, 0.38);
+
+  /* ====== TYPOGRAPHY TOKENS — type-system.md §10 ====== */
+  --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-body: "Inter Variable", "Inter", system-ui, -apple-system, sans-serif;
+
+  /* Size scale (fluid, 1.333 ratio ladder w/ deliberate extremes) */
+  --text-hero:        clamp(3.5rem, 9vw, 8.5rem);
+  --text-hero-italic: clamp(2.5rem, 5.5vw, 4.5rem);
+  --text-h1:          clamp(2.25rem, 5vw, 3.75rem);
+  --text-h2:          clamp(1.75rem, 3.2vw, 2.5rem);
+  --text-numeral:     clamp(3.5rem, 7vw, 6rem);
+  --text-h3:          clamp(1.25rem, 1.75vw, 1.5rem);
+  --text-h4:          clamp(1rem, 1.25vw, 1.125rem);
+  --text-lead:        clamp(1.05rem, 1.15vw, 1.2rem);
+  --text-body:        clamp(0.95rem, 1vw, 1.0625rem);
+  --text-sm:          clamp(0.8125rem, 0.9vw, 0.9375rem);
+  --text-label:       clamp(0.75rem, 0.82vw, 0.8125rem);
+  --text-nav:         0.8125rem;
+  --text-xs:          0.7rem;
+
+  /* Weights (type-system.md §3 — Cormorant 500 only for display, 300 italic for pull-quote) */
+  --fw-display:        500;
+  --fw-display-italic: 300;
+  --fw-body:           400;
+  --fw-ui:             500;
+  --fw-label:          600;
+}

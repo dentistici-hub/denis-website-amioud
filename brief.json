@@ -1,0 +1,276 @@
+{
+  "starter": "wellness",
+  "starter_confidence": 0.65,
+  "starter_note": "Amioud is a luxury niche-perfumery D2C brand (hair-fragrance extrait de parfum, 20% concentration, Violet Collection). No canonical starter matches. 'wellness' is the best existing fit because it ships with the editorial/lifestyle base the build needs, but this brief overlays heavy luxury-fragrance conventions (Diptyque / Byredo / Le Labo references) on top of the wellness defaults. Denis confirmed wellness in the kickoff.",
+  "design": {
+    "palette": {
+      "bg": "#f3eee6",
+      "fg": "#1a171b",
+      "accent": "#5a3e8c",
+      "accent_hover": "#4a3275",
+      "accent_dark": "#2f1f4d",
+      "accent_secondary": "#b89768",
+      "source": "logo",
+      "source_detail": "Onyx #1a171b and neutral greys (#a7a8aa, #ffffff) pulled from the brand manual (brandmanual_compressed.pdf, page extracting web hex 26/23/27 = #1a171b and print 0/0/0/100). Cream bg #f3eee6 is a warm-ivory neutral chosen over pure #ffffff to match the niche-perfumery editorial convention (Diptyque / Le Labo). Violet accent #5a3e8c sampled + contrast-adjusted from the Violet Collection bottle cap (purple/lilac marbled sphere on all three SKUs). Gold secondary #b89768 sampled from the 20ml rollerball metallic caps and the champagne 'A' sub-mark (variantegialla.png).",
+      "contrast_checks": {
+        "fg_on_bg": 15.38,
+        "accent_on_bg": 7.27,
+        "secondary_on_fg": 6.48,
+        "fg_on_white": 17.76,
+        "accent_on_white": 6.4
+      }
+    },
+    "typography": {
+      "display": {
+        "family": "Cormorant Garamond",
+        "weight": 500,
+        "source_url": "https://fontsource.org/fonts/cormorant-garamond",
+        "fontsource_package": "@fontsource/cormorant-garamond",
+        "note": "High-contrast old-style serif. Essential for niche-perfumery editorial feel (Byredo + Diptyque both use similar Didone/Garamond-family display serifs). Use at weight 500 for headlines, 300 italic for pull quotes. Do not use weight 700 — too heavy, breaks the quiet cadence."
+      },
+      "body": {
+        "family": "Inter",
+        "weight": 400,
+        "source_url": "https://fontsource.org/fonts/inter",
+        "fontsource_package": "@fontsource-variable/inter",
+        "note": "Variable font. Body 400, labels / UI 500, nav / small caps 600 letter-spaced. Inter is the neutral grotesque counterpart that gets out of the serif's way — same pairing strategy Aesop and Le Labo use."
+      },
+      "pairing_rationale": "High-contrast serif + quiet grotesque sans is the uniform of niche perfumery. Cormorant Garamond carries the brand voice (ETEREO / ONIRICO / SOGNO — ethereal, dreamlike, dream) in headlines; Inter handles product specs, ingredient tables, and e-commerce UI without competing. Tested available on Fontsource, GDPR-safe self-hosted."
+    },
+    "animation_intensity": "cinematic",
+    "animation_note": "Slow, deliberate, editorial. Scroll-scrub + clip-mask + ken-burns — never magnetic, never scramble, never dragGallery. Fragrance brands require quiet.",
+    "signature_visual": "Scroll-scrubbed bottle turntable hero — a 60-frame sequence (or ScrollVideoScrub on an MP4) of the AMIOVD 50ml bottle rotating 360 degrees, the violet marbled cap catching light as the amber liquid shifts. The rotation is tied 1:1 to scroll distance through the first 100vh, pinned. At 100vh the bottle pins centred; at 120vh three floating serif labels fade in beside it — 'Amber Dusk. Bubble Garden. Midnight in Florence.' — one per SKU, staggered 200ms, each linking to the fragrance detail page. Below the pin: the 'primo Extrait de Parfum al mondo per capelli' claim in Cormorant Garamond at 8vw. If the scroll-frame MP4 is unavailable from the Shopify hero poster, fallback to InteractiveThreeScene with a GLB of the bottle (asset-gatherer commissions the GLB) or static KenBurnsImage of the product-amber-dusk-01.jpg with ClipMaskReveal label entrance.",
+    "signature_primitive_primary": "ScrollVideoScrub",
+    "signature_primitive_fallback_tier1": "InteractiveThreeScene",
+    "signature_primitive_fallback_tier2": "KenBurnsImage + ClipMaskReveal",
+    "design_notes": "Retrofit note: no wellness cheat sheet exists at Website/research/wellness.md, so I improvised from the niche-perfumery reference canon (Diptyque, Byredo, Le Labo) per the kickoff brief. The brand manual PDF was readable and gave authoritative tokens (onyx #1a171b, greys, adjectives ETEREO/ONIRICO/UNICO/LEGGEREZZA/SOGNO/FLOREALE). Overall direction: editorial minimalism, slow scroll, Cormorant + Inter, monochrome onyx-on-cream with one disciplined violet accent. Intentional deviations from the wellness starter defaults: (1) HeroVideo / ScrollVideoScrub in place of HeroStats — the bottle IS the product story, never percentages; (2) no TestimonialsWall — a sub-1-year-old brand with no public testimonials; instead TrustHeritage with the supply-chain provenance (Grasse, Laboratori Sabatel Perugia, SAVE Logistica); (3) no ServicesCards grid-of-3 — SKUs get their own editorial /fragranze/:slug pages reached via a preview section, not commoditised cards. Per Denis's retrofit constraint, flagging ScrollVideoScrub as the target — asset-gatherer needs to pull or commission a 360 bottle rotation video/frame-sequence.",
+    "component_overrides": [
+      { "slot": "nav", "variant": "nav-minimal", "file": "components/navigation/NavMinimal.astro", "reason": "Niche perfumery convention. Logo left, 3-4 link menu right, transparent-over-hero then solid on scroll. Glassmorphism or Mega would feel e-commerce-generic." },
+      { "slot": "hero", "variant": "hero-video", "file": "components/heroes/HeroVideo.astro", "reason": "Houses the ScrollVideoScrub signature. If scroll-frame video unavailable, degrade to HeroFullscreen with KenBurns on product-amber-dusk-01.jpg. NEVER HeroStats or HeroCarousel — both destroy the product-as-protagonist framing." },
+      { "slot": "services", "variant": "services-accordion", "file": "components/services/ServicesAccordion.astro", "reason": "Used on per-fragrance pages ONLY for the top/heart/base-notes breakdown (three vertical accordion rows). Home page does NOT use services — fragrances get fragrance-preview cards instead." },
+      { "slot": "portfolio", "variant": "portfolio-staggered", "file": "components/portfolio/PortfolioStaggered.astro", "reason": "Repurposed as the home page 'fragrance-preview' section: three offset cards, each a fragrance, with big Cormorant numerals 01/02/03, product shot, one-line mood descriptor (from the pitchdeck olfactory pyramid), link to /fragranze/<slug>. Staggered reads editorial, not catalog-y." },
+      { "slot": "trust", "variant": "trust-heritage", "file": "components/trust/TrustHeritage.astro", "reason": "The brand's credibility is in its supply-chain provenance (Grasse essences, Laboratori Sabatel Perugia, 18 months R&D, deposited patent, 20% extrait concentration). Heritage variant frames this as a chain of artisan partnerships, not stats. TrustStats would feel too startup." },
+      { "slot": "team", "variant": "team-spotlight", "file": "components/team/TeamSpotlight.astro", "reason": "Two founders only (Manuel Caputo CEO + Sveva Motteran Product Manager). Spotlight reads editorial and gives each founder breathing room. TeamGrid would look thin with just 2. Lives on the /visione page, not home." },
+      { "slot": "content", "variant": "content-philosophy", "file": "components/content/ContentPhilosophy.astro", "reason": "Home 'brand-story-intro' teaser + /visione page body. Carries the six brand adjectives (ETEREO / ONIRICO / UNICO / LEGGEREZZA / SOGNO / FLOREALE) as a marquee of values over the 'three bottles, three stories' positioning." },
+      { "slot": "contact", "variant": "contact-cta", "file": "components/contact/ContactCta.astro", "reason": "Used as the 'rivenditori-cta' and 'quiz-cta' banners — big editorial headline, one primary action. Not a full form (contact is info.amioud@gmail.com only; no booking / no quote)." },
+      { "slot": "footer", "variant": "footer-minimal", "file": "components/footer/FooterMinimal.astro", "reason": "Legal-heavy but visually quiet. Needs Aura Company S.R.L., VAT IT13285940014, Via Nicola Fabrizi 43 Torino, Foro di Torino jurisdiction, socials (IG/FB/TikTok), /privacy + /cookie-policy links. FooterRich would over-fill a minimalist brand." }
+    ],
+    "motion_primitives_used": [
+      { "primitive": "ScrollVideoScrub", "slot": "hero bottle turntable", "priority": "signature" },
+      { "primitive": "ClipMaskReveal", "slot": "fragrance-preview card entrance + /visione brand-story sections", "priority": "core" },
+      { "primitive": "KenBurnsImage", "slot": "/fragranze/:slug hero + product-gallery stills", "priority": "core" },
+      { "primitive": "ParallaxLayer", "slot": "brand-story-intro teaser, slow y-translate on the 'A' sub-mark (variantegialla.png) as a decorative watermark", "priority": "core" },
+      { "primitive": "Marquee", "slot": "values marquee (ETEREO · ONIRICO · UNICO · LEGGEREZZA · SOGNO · FLOREALE) on /visione", "priority": "accent" },
+      { "primitive": "CutoutImage", "slot": "related-fragrances section on /fragranze/:slug — the other two bottles floating with subtle shadow", "priority": "accent" },
+      { "primitive": "InteractiveThreeScene", "slot": "FALLBACK only if ScrollVideoScrub frames cannot be sourced; 3D bottle rotation driven by cursor", "priority": "fallback" },
+      { "primitive": "ShaderCanvas", "slot": "OPTIONAL — marbled violet/cyan/pink iridescent wash behind the /visione hero heading, mimicking the Violet Collection packaging artwork. Only if asset-gatherer cannot source the official marble swatch PNG from the packaging artwork files", "priority": "optional" }
+    ],
+    "section_order_home": [
+      "hero",
+      "brand-story-intro",
+      "fragrance-preview",
+      "quiz-cta",
+      "rivenditori-cta",
+      "footer"
+    ],
+    "section_order_fragrance_page": [
+      "fragrance-hero",
+      "notes-breakdown",
+      "story",
+      "product-gallery",
+      "shop-cta",
+      "related-fragrances"
+    ],
+    "pages_to_build": [
+      { "path": "/", "purpose": "home, editorial gateway" },
+      { "path": "/fragranze/amber-dusk", "purpose": "SKU detail page" },
+      { "path": "/fragranze/bubble-garden", "purpose": "SKU detail page" },
+      { "path": "/fragranze/midnight-in-florence", "purpose": "SKU detail page" },
+      { "path": "/shop", "purpose": "PLACEHOLDER — 'Il nostro shop arriva presto' with one prominent button. Href is a TODO comment for Denis to swap in Shopify URL when live." },
+      { "path": "/rivenditori", "purpose": "distributor / stockist program info + list of Roby Profumi partners (list currently thin; placeholder block OK)" },
+      { "path": "/visione", "purpose": "brand story, founders, supply chain provenance, values marquee. Replaces /pages/la-nostra-vision from the live site." },
+      { "path": "/privacy", "purpose": "standard privacy policy (Italian, GDPR)" },
+      { "path": "/cookie-policy", "purpose": "standard cookie policy (Italian, GDPR)" }
+    ]
+  },
+  "enriched_content": {
+    "services": [
+      { "name": "Amber Dusk", "description": "Extrait de parfum al 20% per capelli. Note di testa: vaniglia. Note di cuore: lavanda. Note di fondo: ambra. Mood: avvolgente e sensuale. Evoca la quiete e il calore di un tramonto dorato. Disponibile in formato 50ml (€48,90) e 20ml (€24,90). Unisex.", "confidence": 1.0, "sources": ["analysis.json", "pitchdeck Amioudrev.pdf p.4 piramide olfattiva"] },
+      { "name": "Bubble Garden", "description": "Extrait de parfum al 20% per capelli. Note di testa: note floreali fresche. Note di cuore: gelsomino. Note di fondo: muschi bianchi. Mood: solare e giocosa. Tema del giardino incantato, gioia e leggerezza. Disponibile in formato 50ml (€48,90) e 20ml (€24,90). Unisex.", "confidence": 1.0, "sources": ["analysis.json", "pitchdeck Amioudrev.pdf p.4"] },
+      { "name": "Midnight in Florence", "description": "Extrait de parfum al 20% per capelli. Note di testa: iris. Note di cuore: incenso. Note di fondo: legni preziosi. Mood: misteriosa e raffinata. Cattura la magia di una notte senza tempo tra le strade di Firenze. Disponibile in formato 50ml (€48,90) e 20ml (€24,90). Unisex.", "confidence": 1.0, "sources": ["analysis.json", "pitchdeck Amioudrev.pdf p.4"] },
+      { "name": "Quiz Trova-la-tua-fragranza", "description": "Quiz di 5 domande, senza registrazione, per abbinare il cliente alla fragranza Amioud più adatta al suo mood olfattivo.", "confidence": 1.0, "sources": ["analysis.json"] },
+      { "name": "Programma Rivenditori", "description": "Rete di profumerie selettive e saloni professionali italiani. Distribuzione B2B curata da Roby Profumi. Trattative in corso con Notino per il 2026.", "confidence": 1.0, "sources": ["analysis.json", "pitchdeck Amioudrev.pdf p.2 milestone 2026"] }
+    ],
+    "team": [
+      {
+        "name": "Manuel Caputo",
+        "role": "CEO & Co-Founder, Aura Company S.r.l.",
+        "bio": "CEO e co-fondatore di Aura Company (51% delle quote societarie, 50% del brand Amioud). Dopo il diploma in Ragioneria e Programmazione, ha maturato sette anni di esperienza internazionale in Australia come Restaurant Manager, costruendo competenze di gestione operativa, leadership di team e orientamento al cliente. Rientrato in Italia, presidia la strategia complessiva, le relazioni con investitori e banche, lo sviluppo commerciale B2B e il coordinamento della filiera produttiva delocalizzata tra Grasse, Perugia e Fiano Romano.",
+        "confidence": 1.0,
+        "source": "pitchdeck Amioudrev.pdf pp.1-2 anagrafica, pp.25-26 I Soci Fondatori"
+      },
+      {
+        "name": "Sveva Motteran",
+        "role": "Product Manager & Co-Founder, Aura Company S.r.l.",
+        "bio": "Product Manager e co-fondatrice di Aura Company (49% delle quote societarie, 50% del brand Amioud). Il suo percorso professionale è costruito interamente all'interno dell'universo beauty e cosmetico: qualifica come Operatore Socio-Sanitario nel 2016, poi corso annuale dell'Accademia Italiana di Estetica e Make-up (AIEM). Responsabile della selezione degli attivi cosmetici, della piramide olfattiva delle fragranze e del dialogo tecnico con i Laboratori Sabatel di Perugia e le maison essenziere di Grasse.",
+        "confidence": 0.85,
+        "source": "pitchdeck Amioudrev.pdf p.26 I Soci Fondatori (bio text partially truncated at pitchdeck extract boundary — verified role + quote split + AIEM credential)"
+      }
+    ],
+    "testimonials": [],
+    "about": {
+      "text": "Amioud nasce nel 2025 a Torino come brand di punta di Aura Company S.r.l., dall'incontro tra due mondi tradizionalmente separati: la profumeria artistica di alto livello e l'hair care professionale. Il risultato di oltre diciotto mesi di ricerca e sviluppo condotti con i Laboratori Sabatel di Perugia e le maison essenziere di Grasse è il primo Extrait de Parfum al mondo al 20% formulato specificamente per i capelli — una formulazione protetta da brevetto depositato. Ogni fragranza Amioud combina la complessità olfattiva della profumeria artistica (piramide a tre tempi: testa, cuore, fondo) con principi attivi cosmetici pregiati — cheratina idrolizzata, olio di semi di lino, collagene — trasformando il gesto del profumarsi in un trattamento di cura quotidiano. Le fragranze sono unisex, pensate per chi desidera distinguersi attraverso un'impronta olfattiva unica, rispettando la salute del capello.",
+      "confidence": 1.0,
+      "sources": ["analysis.json about", "pitchdeck Amioudrev.pdf pp.1-4 Panoramica + Missione + Composizione Tecnica"]
+    },
+    "stats": [
+      { "label": "Concentrazione Extrait de Parfum", "value": "20%", "confidence": 1.0, "source": "pitchdeck p.3 Proposta di Valore Unica" },
+      { "label": "Mesi di R&D con Laboratori Sabatel e maison di Grasse", "value": "18+", "confidence": 1.0, "source": "pitchdeck p.1 Panoramica" },
+      { "label": "Fragranze della Violet Collection", "value": "3", "confidence": 1.0, "source": "analysis.json" },
+      { "label": "Formati disponibili", "value": "50ml + 20ml", "confidence": 1.0, "source": "pitchdeck p.4" },
+      { "label": "Anno di fondazione", "value": "2025", "confidence": 1.0, "source": "pitchdeck p.1 (costituzione 7 luglio 2025)" }
+    ],
+    "founding_story": {
+      "text": "Aura Company S.r.l. è stata costituita il 7 luglio 2025 a Torino dai due soci fondatori Manuel Caputo (CEO, 51%) e Sveva Motteran (Product Manager, 49%). Il progetto nasce da oltre diciotto mesi di ricerca e sviluppo, condotti in collaborazione con i Laboratori Sabatel di Luigi Macchiagodena a Perugia e le maison essenziere di Grasse, cuore storico della profumeria mondiale. Il lancio ufficiale del brand Amioud sul canale e-commerce www.amioud.com è avvenuto ad agosto 2025, seguito dal deposito del brevetto sulla formulazione extrait de parfum al 20% per capelli e dalle prime partnership con i rivenditori fisici. Nel 2026 è iniziato l'ingresso nel canale distributivo professionale tramite Roby Profumi, con trattative in corso con Notino per l'espansione europea.",
+      "confidence": 1.0,
+      "source": "pitchdeck Amioudrev.pdf pp.1-2 Tappe fondamentali del percorso imprenditoriale"
+    },
+    "certifications": [
+      { "name": "Brevetto depositato su formulazione extrait de parfum al 20% per capelli", "body": "Italia (2025)", "confidence": 1.0, "source": "pitchdeck p.1 Panoramica + p.2 milestone 2025" },
+      { "name": "Partnership con Laboratori Sabatel (Perugia) per formulazione e imbottigliamento", "body": "Laboratori Sabatel di Luigi Macchiagodena", "confidence": 1.0, "source": "pitchdeck p.1" },
+      { "name": "Essenze da maison essenziere di Grasse", "body": "Grasse, Francia", "confidence": 1.0, "source": "pitchdeck p.1" },
+      { "name": "Distribuzione B2B curata da Roby Profumi", "body": "Roby Profumi (Italia)", "confidence": 1.0, "source": "analysis.json + pitchdeck p.2 milestone 2026" }
+    ],
+    "faq_pairs": [
+      {
+        "question": "Qual è la differenza tra un profumo per capelli Amioud e un profumo classico per la pelle?",
+        "answer": "Amioud è un Extrait de Parfum al 20% formulato specificamente per i capelli, non per la pelle. A differenza dei profumi tradizionali, la formula Amioud contiene principi attivi cosmetici pregiati — cheratina idrolizzata, olio di semi di lino e collagene — che rinforzano e proteggono la fibra capillare mentre rilasciano la fragranza. Utilizza inoltre un vettore alcolico cosmetico dedicato che non secca il capello. È il primo extrait de parfum al mondo pensato esplicitamente per l'hair care, protetto da brevetto depositato."
+      },
+      {
+        "question": "Quali sono le fragranze della Violet Collection Amioud?",
+        "answer": "La Violet Collection comprende tre extrait de parfum per capelli, tutti unisex. Amber Dusk costruisce un mood avvolgente e sensuale su note di vaniglia, lavanda e ambra. Bubble Garden è solare e giocosa, con note floreali fresche, gelsomino e muschi bianchi. Midnight in Florence è misteriosa e raffinata, con iris, incenso e legni preziosi. Ogni fragranza è disponibile in formato 50ml (€48,90) e 20ml (€24,90) sul sito www.amioud.com."
+      },
+      {
+        "question": "Dove viene prodotto Amioud e chi c'è dietro il brand?",
+        "answer": "Amioud è il brand di Aura Company S.r.l., società fondata a Torino il 7 luglio 2025 dai soci Manuel Caputo (CEO) e Sveva Motteran (Product Manager). La filiera è interamente orchestrata tra eccellenze produttive: le essenze provengono dalle maison di Grasse, la formula e l'imbottigliamento sono curati dai Laboratori Sabatel di Perugia, il packaging è realizzato da Xuzhou S Moon Glass Products, e la logistica è gestita da SAVE Logistica a Fiano Romano. La distribuzione fisica in Italia è curata da Roby Profumi."
+      },
+      {
+        "question": "Come capisco quale fragranza Amioud è adatta a me?",
+        "answer": "Sul sito www.amioud.com è disponibile un quiz gratuito di cinque domande, senza registrazione, che abbina il cliente alla fragranza più affine al proprio mood olfattivo. È inoltre possibile iniziare con il formato da 20ml (€24,90), pensato come primo approccio al brand o per un utilizzo in viaggio, con la stessa concentrazione al 20% e la stessa identità grafica del formato da 50ml."
+      },
+      {
+        "question": "Amioud è vegano, naturale e sicuro per tutti i tipi di capello?",
+        "answer": "Amioud è formulato con ingredienti di origine naturale come cheratina idrolizzata, olio di semi di lino e collagene, e utilizza un vettore alcolico esclusivamente cosmetico studiato per garantire sicurezza e tollerabilità sulla fibra capillare e sul cuoio capelluto. La formula è unisex e adatta a qualsiasi tipologia di capello. Spedizione gratuita in Italia per ordini superiori a €50."
+      }
+    ]
+  },
+  "brand_facts": {
+    "legal_entity": { "value": "Aura Company S.r.l.", "confidence": 1.0, "source": "analysis.json + pitchdeck p.1" },
+    "vat": { "value": "IT13285940014", "confidence": 1.0, "source": "analysis.json" },
+    "founded": { "value": "7 luglio 2025", "confidence": 1.0, "source": "pitchdeck Amioudrev.pdf p.1 Anagrafica Aziendale" },
+    "headquarters": { "value": "Torino, Italia (Via Nicola Fabrizi 43)", "confidence": 1.0, "source": "analysis.json" },
+    "jurisdiction": { "value": "Foro di Torino", "confidence": 1.0, "source": "analysis.json" },
+    "founders": [
+      { "name": "Manuel Caputo", "role": "CEO", "ownership_aura": "51%", "ownership_brand": "50%", "confidence": 1.0, "source": "pitchdeck p.1" },
+      { "name": "Sveva Motteran", "role": "Product Manager", "ownership_aura": "49%", "ownership_brand": "50%", "confidence": 1.0, "source": "pitchdeck p.1" }
+    ],
+    "supply_chain": {
+      "essences": { "value": "maison essenziere di Grasse (Francia)", "confidence": 1.0, "source": "pitchdeck p.1" },
+      "formulation": { "value": "Laboratori Sabatel di Luigi Macchiagodena, Perugia", "confidence": 1.0, "source": "pitchdeck p.1" },
+      "packaging": { "value": "Xuzhou S Moon Glass Products (Cina)", "confidence": 1.0, "source": "pitchdeck p.1" },
+      "logistics": { "value": "SAVE Logistica, Fiano Romano", "confidence": 1.0, "source": "pitchdeck p.1" },
+      "distribution_italy": { "value": "Roby Profumi", "confidence": 1.0, "source": "analysis.json + pitchdeck" }
+    },
+    "products": {
+      "collection_name": "Violet Collection",
+      "skus": ["Amber Dusk", "Bubble Garden", "Midnight in Florence"],
+      "formats": ["50ml (€48,90)", "20ml (€24,90)"],
+      "pricing_net_iva": { "ecom_50ml": "€40,08", "ecom_20ml": "€20,41", "retail_direct_avg": "€14,40", "wholesale_avg": "€9,63" },
+      "concentration": "20% extrait de parfum",
+      "active_ingredients": ["cheratina idrolizzata", "olio di semi di lino", "collagene idrolizzato"],
+      "positioning": "primo extrait de parfum al mondo per capelli, brevetto depositato",
+      "confidence": 1.0,
+      "sources": ["pitchdeck pp.4-5"]
+    },
+    "variantegialla_status": "NOT a product variant. variantegialla.png is a secondary champagne 'A' monogram mark with a halo of dots — a decorative sub-mark suitable for use as favicon, loader glyph, or section watermark. Not a yellow SKU. Confirmed by visual inspection: no live SKU named 'giallo/yellow' in analysis.json. Safe to use as decorative emblem on the live brand site."
+  },
+  "reference_sites": [
+    { "url": "https://www.diptyqueparis.com/en_eu/", "why": "Canonical niche-perfumery editorial layout — serif display, warm neutral bg, slow scroll, product hero as protagonist. Closest tonal match for Amioud's 'quiet luxury' intent.", "borrow": "layout" },
+    { "url": "https://www.byredo.com/eu_en/", "why": "Monochrome palette with a single accent per collection, large Cormorant-family serif heads, disciplined product photography on neutral bg. Validates our palette and type pairing.", "borrow": "palette" },
+    { "url": "https://www.lelabofragrances.com/", "why": "Bottle-as-hero on every page, label-style typography hierarchy, minimal navigation, editorial rather than e-commerce-heavy feel. Borrow the hero framing and label treatment for /fragranze/:slug pages.", "borrow": "structure" }
+  ],
+  "voice_notes": {
+    "language": "Italian (primary)",
+    "tone": "Editorial, evocativa, leggera. Mai corporate, mai AI-robotico, mai gergo da e-commerce ('acquista ora', 'scopri di più' da soli). Denis's feedback on Italian email style applies: accenti corretti (è, à, ì, ò, ù), niente em-dash, frasi brevi alternate a frasi lunghe. Tono da profumeria artistica — ogni parola deve evocare, non vendere.",
+    "brand_adjectives": ["ETEREO", "ONIRICO", "UNICO", "LEGGEREZZA", "SOGNO", "FLOREALE"],
+    "voice_adjectives_source": "brandmanual_compressed.pdf — authoritative brand manual adjective list",
+    "vocabulary_do": [
+      "extrait de parfum",
+      "piramide olfattiva",
+      "note di testa / cuore / fondo",
+      "profumeria artistica",
+      "maison essenziere",
+      "materie prime",
+      "rituale olfattivo",
+      "guardaroba olfattivo",
+      "impronta olfattiva",
+      "artigianalità italo-francese"
+    ],
+    "vocabulary_dont": [
+      "shampoo profumato",
+      "spray per capelli",
+      "cosmetico",
+      "acquista subito",
+      "offerta imperdibile",
+      "scopri la nostra gamma",
+      "all'avanguardia",
+      "innovativo (usare 'brevettato' instead)"
+    ],
+    "headline_style_examples": [
+      "Il primo Extrait de Parfum al mondo per capelli.",
+      "Tre fragranze. Tre storie. Una concentrazione senza compromessi.",
+      "Da Grasse a Perugia. Dal 7 luglio 2025.",
+      "ETEREO · ONIRICO · UNICO — il nostro guardaroba olfattivo per i capelli."
+    ]
+  },
+  "source_quality": "good",
+  "italian_sources_used": [
+    "amioud.com (live site)",
+    "brandmanual_compressed.pdf (Amioud internal brand manual)",
+    "Amioudrev.pdf (Amioud Business Plan 2026, internal)",
+    "pitchdeck-slides 1-12 (product photography, provided)",
+    "variantegialla.png (secondary monogram mark, provided)"
+  ],
+  "external_research_attempted": [
+    { "source": "registroimprese.it / italianbusinessregister.it", "status": "SKIPPED", "reason": "Pitchdeck business plan supplied all legal + founding facts with higher fidelity than Camera di Commercio lookup would yield (VAT, date 7-luglio-2025, share split, founder backgrounds). Skipping avoids redundant fetches." },
+    { "source": "linkedin.com/company/amioud", "status": "SKIPPED", "reason": "Brand is <1 year old and analysis.json shows no linkedin company URL on the live site. Low probability of yield." },
+    { "source": "Diptyque + Byredo reference-site fetches", "status": "COMPLETED", "note": "Validated typography pair (serif display + grotesque sans) and monochrome-warm-neutral palette direction." }
+  ],
+  "flags": [
+    {
+      "level": "info",
+      "topic": "missing cheat sheet",
+      "message": "Website/research/wellness.md does not exist. The pipeline has four cheat sheets (tech/construction/restaurant/professional-services) and no wellness sheet, even though 'wellness' is a shipped starter. Per the kickoff brief Denis explicitly said to improvise from niche-perfumery references when the cheat sheet is missing — so that's what this brief does. Worth Denis writing research/wellness.md at some point to capture the luxury-fragrance / beauty-D2C / spa patterns this retrofit surfaces."
+    },
+    {
+      "level": "info",
+      "topic": "signature visual assets",
+      "message": "The chosen signature (scroll-scrubbed bottle turntable) requires one of three asset types, in preference order: (1) a 60-frame PNG sequence of the bottle rotating 360° — ideal for ScrollVideoScrub with iOS Safari fallback; (2) an MP4/MOV of the bottle rotating — analysis.json flagged the existing hero is a Shopify-CDN video, asset-gatherer should probe for it; (3) a bottle GLB for InteractiveThreeScene as tier-1 fallback. Asset-gatherer must fill at least one of these in the manifest — if none are reachable, the site degrades to KenBurnsImage + ClipMaskReveal on product-amber-dusk-01.jpg, which is acceptable but loses the signature move."
+    },
+    {
+      "level": "info",
+      "topic": "ShaderCanvas optional",
+      "message": "The Violet Collection packaging has a striking pink/violet/cyan iridescent marble swatch. If asset-gatherer cannot pull the packaging artwork PNG directly, the builder can optionally use ShaderCanvas with a custom GLSL noise+gradient shader to approximate the marble behind the /visione hero. Flagged as OPTIONAL — not a blocker."
+    },
+    {
+      "level": "info",
+      "topic": "founding recency",
+      "message": "Brand is <1 year old as of April 2026 (founded 7 luglio 2025, launched August 2025). No third-party press coverage or reviews found. Zero testimonials. Builder should hide TestimonialsWall entirely (already excluded from component_overrides) and lean on supply-chain provenance (TrustHeritage) rather than social proof."
+    },
+    {
+      "level": "info",
+      "topic": "/shop placeholder",
+      "message": "Per Denis's scope: /shop is a placeholder page with copy 'Il nostro shop arriva presto' and a single prominent button. Builder must leave the button's href as an HTML comment TODO for Denis to swap in the Shopify URL when live. All shop-cta buttons on /fragranze/:slug pages should link to /shop (internal), not external Shopify, so the placeholder governs the whole funnel."
+    }
+  ]
+}

@@ -1,0 +1,217 @@
+{
+  "company": {
+    "name": "Amioud",
+    "slug": "amioud",
+    "tagline": "Il primo Extrait de Parfum al mondo per capelli",
+    "industry": "other",
+    "industry_confidence": 0.95,
+    "industry_note": "Luxury hair-fragrance e-commerce / niche perfumery + beauty. Not a fit for the five canonical starters {tech, construction, restaurant, professional-services, other}. Best fit among existing starters is almost certainly the 'wellness' starter (starters/wellness) — Denis should confirm before researcher runs.",
+    "language": "it",
+    "founding_year": null,
+    "location": {
+      "address": "Via Nicola Fabrizi 43",
+      "city": "Torino",
+      "country": "Italy",
+      "lat": null,
+      "lng": null
+    },
+    "contact": {
+      "phone": null,
+      "email": "info.amioud@gmail.com",
+      "whatsapp": null,
+      "social": {
+        "linkedin": null,
+        "facebook": "https://www.facebook.com/amioudofficial",
+        "instagram": "https://www.instagram.com/amioudofficial/",
+        "tiktok": "https://tiktok.com/@amioudofficial"
+      }
+    },
+    "legal": {
+      "registered_name": "Aura Company S.R.L.",
+      "vat": "IT13285940014",
+      "director": "Manuel Caputo (Amministratore Unico)",
+      "jurisdiction": "Foro di Torino",
+      "distributor": "Roby Profumi"
+    }
+  },
+  "content": {
+    "services": [
+      {
+        "name": "Amber Dusk",
+        "description": "Extrait de parfum per capelli della Violet Collection. Evoca la quiete e il calore di un tramonto dorato. €21.50 (da €24.90).",
+        "confidence": 1.0
+      },
+      {
+        "name": "Bubble Garden",
+        "description": "Extrait de parfum per capelli della Violet Collection. Gioia e leggerezza, tema del giardino incantato. €21.50 (da €24.90).",
+        "confidence": 1.0
+      },
+      {
+        "name": "Midnight in Florence",
+        "description": "Extrait de parfum per capelli della Violet Collection. Cattura la magia di una notte senza tempo tra le strade di Firenze. €21.50 (da €24.90).",
+        "confidence": 1.0
+      },
+      {
+        "name": "Quiz Trova-la-tua-fragranza",
+        "description": "Quiz di 5 domande, senza registrazione, per abbinare il cliente alla fragranza Amioud più adatta.",
+        "confidence": 1.0
+      },
+      {
+        "name": "Programma Rivenditori",
+        "description": "Rete di profumerie e rivenditori partner (sezione 'I Nostri Rivenditori'). Distribuzione curata da Roby Profumi.",
+        "confidence": 1.0
+      }
+    ],
+    "team": [
+      {
+        "name": "Manuel Caputo",
+        "role": "Amministratore Unico, Aura Company S.R.L.",
+        "confidence": 1.0,
+        "source": "Informativa Legale"
+      }
+    ],
+    "testimonials": [],
+    "about": "Amioud è il primo brand specializzato in profumi per capelli ad alta concentrazione: estratti di profumo ispirati alla profumeria artistica, pensati per avvolgere i capelli con eleganza, senza danneggiarli. Le formule sono arricchite con cheratina vegetale e olio di semi di lino, prive di alcol aggressivo. La vision: un mondo in cui il profumo non è solo un dettaglio, ma un'estensione della personalità — anche nei capelli. Fragranze unisex, inclusive, definite dal carattere e non dal genere. Made in Italy, distribuito da Roby Profumi, spedizione gratuita in Italia sopra €50.",
+    "meta_description": null,
+    "values": [
+      "Profumeria artistica (naso creativo per la fibra capillare)",
+      "Estratti ad alta concentrazione per un'esperienza olfattiva intensa e duratura",
+      "Formule hair-friendly: senza alcol aggressivo, con cheratina e olio di lino",
+      "Unisex e inclusivo: fragranze senza genere",
+      "Made with intention: ogni fragranza racconta una storia"
+    ]
+  },
+  "assets": {
+    "logo": "https://www.amioud.com/cdn/shop/files/profumo_per_capelli_amioud_logo.png?v=1762808063",
+    "images": [
+      {
+        "url": "https://www.amioud.com/cdn/shop/files/profumo_per_capelli_amioud_logo.png?v=1762808063",
+        "alt": "amioud logo profumo per capelli",
+        "width": 1200,
+        "local": "scraped-assets/logo.png",
+        "usable": true,
+        "role": "logo"
+      },
+      {
+        "url": "https://www.amioud.com/cdn/shop/files/amioud_amber_dusk_profumi_per_capelli_fragranza.jpg?v=1762809573",
+        "alt": "amioud amber dusk profumi per capelli",
+        "width": 1920,
+        "local": "scraped-assets/product-amber-dusk-01.jpg",
+        "usable": true,
+        "role": "product"
+      },
+      {
+        "url": "https://www.amioud.com/cdn/shop/files/profumo_per_capelli_amioud_amber_dusk_fragranza.jpg?v=1762809578",
+        "alt": "profumo per capelli amioud amber dusk fragranza",
+        "width": 1920,
+        "local": "scraped-assets/product-amber-dusk-02.jpg",
+        "usable": true,
+        "role": "product"
+      },
+      {
+        "url": "https://www.amioud.com/cdn/shop/files/profumo_per_capelli_amioud_bubble_garden.jpg?v=1762812232",
+        "alt": "profumo per capelli amioud bubble garden",
+        "width": 1920,
+        "local": "scraped-assets/product-bubble-garden-01.jpg",
+        "usable": true,
+        "role": "product"
+      },
+      {
+        "url": "https://www.amioud.com/cdn/shop/files/profumo_per_capelli_amioud_bubble_garden_fragranza.jpg?v=1762809495",
+        "alt": "profumo per capelli amioud bubble garden fragranza",
+        "width": 1920,
+        "local": "scraped-assets/product-bubble-garden-02.jpg",
+        "usable": true,
+        "role": "product"
+      },
+      {
+        "url": "https://www.amioud.com/cdn/shop/files/midnight_in_florence_profumi_per_capelli_fragranza_amioud.jpg?v=1762812196",
+        "alt": "amioud midnight in florence profumi per capelli fragranza",
+        "width": 1920,
+        "local": "scraped-assets/product-midnight-florence-01.jpg",
+        "usable": true,
+        "role": "product"
+      },
+      {
+        "url": "https://www.amioud.com/cdn/shop/files/midnight_in_florence_amioud.jpg?v=1762809394",
+        "alt": "profumo per capelli amioud midnight in florence",
+        "width": 1920,
+        "local": "scraped-assets/product-midnight-florence-02.jpg",
+        "usable": true,
+        "role": "product"
+      },
+      {
+        "url": "https://www.amioud.com/cdn/shop/files/Prima.png?v=1763669429",
+        "alt": "Prima (before)",
+        "width": 2400,
+        "local": "scraped-assets/before-prima.png",
+        "usable": true,
+        "role": "before-after"
+      },
+      {
+        "url": "https://www.amioud.com/cdn/shop/files/Dopo.png?v=1763669445",
+        "alt": "Dopo (after)",
+        "width": 2400,
+        "local": "scraped-assets/after-dopo.png",
+        "usable": true,
+        "role": "before-after"
+      },
+      {
+        "url": "https://www.amioud.com/cdn/shop/files/preview_images/1edd6c3fdcb545199b62a5073fc056c1.thumbnail.0000000000_1100x.jpg?v=1763669510",
+        "alt": null,
+        "width": 1100,
+        "local": "scraped-assets/hero-lifestyle-01.jpg",
+        "usable": true,
+        "role": "hero-lifestyle",
+        "note": "Low-res thumbnail preview — likely a video poster. Original video may exist; researcher/asset-gatherer should probe for a full-res source."
+      },
+      {
+        "url": "https://www.amioud.com/cdn/shop/articles/Profumi_per_Capelli_di_Lusso_Amioud_Hair_Essence_Banner.jpg?v=1752083041",
+        "alt": "Perché scegliere un profumo per capelli al posto del classico profumo per la pelle?",
+        "width": 2000,
+        "local": "scraped-assets/blog-why-hair-fragrance.jpg",
+        "usable": true,
+        "role": "editorial"
+      },
+      {
+        "url": "https://www.amioud.com/cdn/shop/articles/Profumi_per_Capelli_di_Lusso_Amioud_Violet_Collection_Bubble_Amber_Midnight_cd76d802-2af4-44df-8192-7bffd7b0957c.jpg?v=1761856559",
+        "alt": "Come scegliere il miglior profumo per capelli in base alle tue esigenze",
+        "width": 2000,
+        "local": "scraped-assets/blog-choose-fragrance.jpg",
+        "usable": true,
+        "role": "editorial"
+      }
+    ],
+    "assets_note": "Three SVG/PNG icons from the site (icona_profumo_per_capelli_amioud.png, _benefici, _di_lusso) were skipped — small decorative icons, not usable as content imagery."
+  },
+  "source_quality": "good",
+  "source_url": "https://www.amioud.com/",
+  "scrape_method": "Jina Reader (r.jina.ai) — WebFetch tier 2. Firecrawl MCP was not invoked; Jina returned complete markdown + image URLs + metadata on first hit.",
+  "flags": [
+    {
+      "level": "blocker",
+      "topic": "starter selection",
+      "message": "Industry does not map to any of the five canonical values {tech, construction, restaurant, professional-services, other}. Amioud is a D2C luxury hair-fragrance e-commerce brand. The existing 'wellness' starter (Website/starters/wellness) is the only plausible fit but was not in the schema's enum. Master must ask Denis which starter to use before proceeding. Also: current pipeline has no e-commerce primitive — Denis may want the build to function as a brand/editorial site with outbound links to the Shopify store, not a full product-catalog replacement."
+    },
+    {
+      "level": "info",
+      "topic": "about page",
+      "message": "/pages/about returns 404. Vision/mission copy was pulled from /pages/la-nostra-vision instead."
+    },
+    {
+      "level": "info",
+      "topic": "supplementary deck",
+      "message": "Denis has a folder at 'Website/pitchdeck amioud/' containing 12 slide PNGs (1.png-12.png, plus variantegialla.png), Amioudrev.pdf, Amioudrev.xlsx, and brandmanual_compressed (2).pdf. NOT ingested here — analysis.json is live-site only. Master may want the researcher or brief-writer to consult it (especially the brand manual for tokens and the deck for positioning)."
+    },
+    {
+      "level": "info",
+      "topic": "hero video",
+      "message": "The home-page hero appears to use a video (the 'preview_images/…thumbnail.0000000000_1100x.jpg' pattern is a Shopify video-poster URL). Only the low-res poster was captured. Asset-gatherer should probe for the underlying MP4/MOV source on the Shopify CDN."
+    },
+    {
+      "level": "info",
+      "topic": "founding year",
+      "message": "Not found on the live site. Copyright footer shows 2026. VAT 13285940014 is an Italian number; founding date could be inferred from Camera di Commercio lookup — researcher's job, not analyzer's."
+    }
+  ]
+}

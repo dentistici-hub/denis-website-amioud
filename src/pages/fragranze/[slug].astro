@@ -1,0 +1,425 @@
+---
+/**
+ * Fragrance detail page — dynamic template for all three SKUs.
+ * Section order (brief.json + concept.md):
+ *   fragrance-hero → notes-breakdown → story → product-gallery → shop-cta → related-fragrances
+ *
+ * Motion per motion-plan.md §2:
+ *   - fragrance-hero:   KenBurnsImage 28s on packshot + ClipMaskReveal name
+ *   - notes-breakdown:  3× ClipMaskReveal (direction up) on note rows, stagger 60ms
+ *   - story:            fade-up on paragraphs only
+ *   - product-gallery:  fade-up stagger 60ms on thumbs (static grid, NOT DragGallery)
+ *   - shop-cta:         static hairline underline
+ *   - related-fragrances: 2× CutoutImage + ClipMaskReveal, stagger 60ms
+ */
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteNav from '../../components/SiteNav.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import ClipMaskReveal from '@motion/ClipMaskReveal.astro';
+import KenBurnsImage from '@motion/KenBurnsImage.astro';
+import CutoutImage from '@motion/CutoutImage.astro';
+import { fragrances, fragranceBySlug, otherFragrances } from '@data/fragrances';
+import { site, nav, schema } from '@data/site';
+import { shopifyHref } from '@data/shopify-links';
+
+export const getStaticPaths = (() => {
+  return fragrances.map((f) => ({ params: { slug: f.slug } }));
+}) satisfies GetStaticPaths;
+
+const { slug } = Astro.params;
+const fragrance = fragranceBySlug(slug as string);
+if (!fragrance) {
+  return Astro.redirect('/');
+}
+
+const others = otherFragrances(fragrance.slug);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const r = (p: string) => (p.startsWith('/') ? `${base}${p}` : p);
+
+const pageTitle = `${fragrance.name}`;
+const pageDescription = `${fragrance.name} — ${fragrance.mood} Extrait de parfum per capelli al 20%. ${fragrance.storyBody.slice(0, 120)}`;
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} site={site} schema={schema}>
+  <SiteNav
+    brandName={site.name}
+    links={nav}
+    logoSrc="/images/logo.png"
+    currentPath={Astro.url.pathname.replace(base, '') || '/'}
+  />
+
+  <main>
+    {/* ========= FRAGRANCE HERO ========= */}
+    <section class="frag-hero" aria-labelledby="frag-hero-title">
+      <div class="container frag-hero__grid">
+        <div class="frag-hero__copy">
+          <p class="eyebrow frag-hero__eyebrow" data-animate="fade-up">{fragrance.eyebrow}</p>
+
+          <ClipMaskReveal direction="up" duration={0.9} ease="expo.out" delay={0} start="top 85%">
+            <h1 id="frag-hero-title" class="display frag-hero__name">{fragrance.name}</h1>
+          </ClipMaskReveal>
+
+          <p class="frag-hero__sub" data-animate="fade-up">{fragrance.heroSubhead}</p>
+
+          <div class="frag-hero__ctas" data-animate="fade-up">
+            <a href={shopifyHref(fragrance.shopifyKey)} class="cta-link" rel="noopener">Acquista</a>
+            <a href={shopifyHref('storeRoot')} class="cta-link cta-link--ghost" rel="noopener">Vai allo shop</a>
+          </div>
+        </div>
+
+        <div class="frag-hero__image">
+          {/* Why KenBurnsImage 28s: slow cinematic entry, motion-plan.md §7. */}
+          <KenBurnsImage
+            src={fragrance.heroImage}
+            alt={`${fragrance.name} — packshot editoriale`}
+            direction="drift"
+            duration={28}
+            aspectRatio="3 / 4"
+          />
+        </div>
+      </div>
+    </section>
+
+    {/* ========= NOTES BREAKDOWN ========= */}
+    <section class="section notes" aria-labelledby="notes-title">
+      <div class="container notes__head">
+        <p class="eyebrow" data-animate="fade-up">Piramide olfattiva</p>
+        <h2 id="notes-title" class="display notes__title" data-animate="fade-up">Tre tempi.</h2>
+      </div>
+
+      <div class="container notes__rows">
+        {fragrance.notes.map((n, i) => (
+          <ClipMaskReveal
+            direction="up"
+            duration={0.8}
+            ease="power3.out"
+            delay={i * 0.06}
+            start="top 85%"
+            class="notes__row-wrap"
+          >
+            <article class="notes__row">
+              <p class="eyebrow notes__row-label">{n.label}</p>
+              <h3 class="display notes__row-ingredient">{n.ingredient}</h3>
+              <p class="notes__row-body">{n.body}</p>
+            </article>
+          </ClipMaskReveal>
+        ))}
+      </div>
+    </section>
+
+    {/* ========= STORY ========= */}
+    <section class="section story" aria-labelledby="story-title">
+      <div class="container story__grid">
+        <div class="story__side">
+          <p class="eyebrow" data-animate="fade-up">Storia</p>
+          <h2 id="story-title" class="display story__title" data-animate="fade-up">
+            {fragrance.storyHeadline}
+          </h2>
+        </div>
+        <div class="prose story__body" data-animate-group="fade-up">
+          <p>{fragrance.storyBody}</p>
+        </div>
+      </div>
+    </section>
+
+    {/* ========= PRODUCT GALLERY ========= */}
+    <section class="section gallery" aria-labelledby="gallery-title">
+      <div class="container gallery__head">
+        <p class="eyebrow" data-animate="fade-up">Dettagli</p>
+        <h2 id="gallery-title" class="display gallery__title" data-animate="fade-up">Flacone e formati.</h2>
+        <p class="gallery__sub" data-animate="fade-up">50ml e 20ml. Unisex. Extrait de parfum al 20%.</p>
+      </div>
+      <div class="container gallery__grid" data-animate-group="fade-up">
+        {fragrance.galleryImages.map((src, i) => (
+          <figure class="gallery__tile">
+            <img src={r(src)} alt={`${fragrance.name} — dettaglio ${i + 1}`} loading="lazy" decoding="async" />
+          </figure>
+        ))}
+      </div>
+    </section>
+
+    {/* ========= SHOP CTA ========= */}
+    <section class="section shop-cta" aria-labelledby="shop-cta-title">
+      <div class="container shop-cta__grid">
+        <div class="shop-cta__text" data-animate-group="fade-up">
+          <h2 id="shop-cta-title" class="display shop-cta__title">{fragrance.shopHeadline}</h2>
+          <p class="shop-cta__sub">{fragrance.shopSubhead}</p>
+          <div class="shop-cta__actions">
+            <a href={shopifyHref(fragrance.shopifyKey)} class="cta-link" rel="noopener">Acquista</a>
+            <a href={shopifyHref('storeRoot')} class="cta-link cta-link--ghost" rel="noopener">Vai allo shop Amioud</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* ========= RELATED FRAGRANCES ========= */}
+    <section class="section related" aria-labelledby="related-title">
+      <div class="container related__head">
+        <h2 id="related-title" class="display related__title" data-animate="fade-up">Le altre due.</h2>
+      </div>
+      <div class="container related__grid">
+        {others.map((o, i) => (
+          <ClipMaskReveal
+            direction="up"
+            duration={0.8}
+            ease="power3.out"
+            delay={i * 0.06}
+            start="top 85%"
+            class="related__card-wrap"
+          >
+            <a href={r(`/fragranze/${o.slug}`)} class="related__card">
+              <div class="related__image">
+                <CutoutImage src={r(o.previewImage)} alt={`${o.name} — ${o.mood}`} shadow="soft" />
+              </div>
+              <h3 class="display related__name">{o.name}</h3>
+              <p class="related__mood"><em>{o.mood}</em></p>
+              <span class="cta-link cta-link--ghost">Scopri</span>
+            </a>
+          </ClipMaskReveal>
+        ))}
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter site={site} />
+</BaseLayout>
+
+<script>
+  import '../../scripts/scroll-animations';
+</script>
+
+<style>
+  /* Fragrance hero — asymmetric 55/45 copy + image */
+  .frag-hero {
+    padding-top: clamp(120px, 16vh, 200px);
+    padding-bottom: var(--space-xl);
+    background: var(--color-bg);
+  }
+  .frag-hero__grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: var(--space-xl);
+    align-items: center;
+  }
+  .frag-hero__copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+  .frag-hero__name {
+    font-size: clamp(2.5rem, 8vw, 6.5rem);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+  .frag-hero__sub {
+    font-size: var(--text-lead);
+    color: var(--color-fg-muted);
+    line-height: 1.45;
+    max-width: 42ch;
+  }
+  .frag-hero__ctas {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  /* Notes breakdown — 3 rows, stacked editorial */
+  .notes {
+    background: var(--color-bg);
+  }
+  .notes__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+    max-width: 32ch;
+  }
+  .notes__title {
+    font-size: var(--text-h1);
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+  }
+  .notes__rows {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .notes__row {
+    display: grid;
+    grid-template-columns: 0.8fr 1fr 1.6fr;
+    align-items: baseline;
+    gap: var(--space-md);
+    padding-block: var(--space-md);
+    border-top: 1px solid var(--color-border);
+  }
+  .notes__row-wrap:last-child .notes__row {
+    border-bottom: 1px solid var(--color-border);
+  }
+  .notes__row-label {
+    color: var(--color-fg-muted);
+  }
+  .notes__row-ingredient {
+    font-size: var(--text-h2);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+  .notes__row-body {
+    font-size: var(--text-body);
+    line-height: 1.55;
+    color: var(--color-fg-muted);
+    max-width: 54ch;
+  }
+
+  /* Story */
+  .story {
+    background: var(--color-bg-elevated);
+  }
+  .story__grid {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+  .story__side {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    position: sticky;
+    top: 120px;
+  }
+  .story__title {
+    font-size: var(--text-h1);
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+    max-width: 14ch;
+  }
+  .story__body p {
+    font-size: var(--text-lead);
+    line-height: 1.55;
+    color: var(--color-fg);
+    max-width: 54ch;
+  }
+
+  /* Gallery */
+  .gallery {
+    background: var(--color-bg);
+  }
+  .gallery__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+    max-width: 36ch;
+  }
+  .gallery__title {
+    font-size: var(--text-h1);
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+  }
+  .gallery__sub {
+    font-size: var(--text-lead);
+    color: var(--color-fg-muted);
+  }
+  .gallery__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+  }
+  .gallery__tile img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    background: var(--color-bg-elevated);
+  }
+
+  /* Shop CTA */
+  .shop-cta {
+    background: var(--color-bg-card);
+  }
+  .shop-cta__grid {
+    display: grid;
+    place-items: center;
+  }
+  .shop-cta__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    text-align: center;
+    max-width: 46ch;
+  }
+  .shop-cta__title {
+    font-size: var(--text-h1);
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+  }
+  .shop-cta__sub {
+    font-size: var(--text-lead);
+    color: var(--color-fg-muted);
+  }
+  .shop-cta__actions {
+    display: inline-flex;
+    gap: var(--space-md);
+    margin-top: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* Related fragrances — 2 cutouts, each wrapped in ClipMaskReveal */
+  .related {
+    background: var(--color-bg);
+  }
+  .related__head {
+    margin-bottom: var(--space-lg);
+  }
+  .related__title {
+    font-size: var(--text-h1);
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+  }
+  .related__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xl);
+  }
+  .related__card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    color: inherit;
+  }
+  .related__image {
+    width: 100%;
+    max-width: 320px;
+  }
+  .related__name {
+    font-size: var(--text-h3);
+    letter-spacing: -0.005em;
+  }
+  .related__mood em {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: var(--fw-display-italic);
+    font-size: var(--text-sm);
+    color: var(--color-fg-muted);
+  }
+  .related__card .cta-link {
+    align-self: start;
+  }
+
+  @media (max-width: 820px) {
+    .frag-hero__grid,
+    .story__grid,
+    .related__grid,
+    .gallery__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+    .notes__row {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+    .story__side { position: static; }
+  }
+</style>

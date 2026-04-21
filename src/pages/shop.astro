@@ -1,0 +1,169 @@
+---
+/**
+ * /shop — placeholder bridge page to Amioud Shopify.
+ * Per shopify-handoff.md: NOT a Shopify catalog rebuild.
+ * Offers: (1) hero with one prominent CTA to Shopify root
+ *         (2) three tiles linking to internal detail pages
+ *         (3) secondary per-SKU Acquista CTA → Shopify product page
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteNav from '../components/SiteNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import CutoutImage from '@motion/CutoutImage.astro';
+import ClipMaskReveal from '@motion/ClipMaskReveal.astro';
+import { fragrances } from '@data/fragrances';
+import { site, nav, schema } from '@data/site';
+import { shopifyHref } from '@data/shopify-links';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const r = (p: string) => (p.startsWith('/') ? `${base}${p}` : p);
+---
+
+<BaseLayout
+  title="Shop"
+  description="Lo shop Amioud è gestito su Shopify. Checkout, spedizioni e resi restano sulla piattaforma ufficiale."
+  site={site}
+  schema={schema}
+>
+  <SiteNav brandName={site.name} links={nav} logoSrc="/images/logo.png" currentPath="/shop" />
+
+  <main>
+    <section class="shop-hero" aria-labelledby="shop-hero-title">
+      <div class="container shop-hero__grid">
+        <div class="shop-hero__copy">
+          <ClipMaskReveal direction="up" duration={0.9} ease="expo.out" start="top 85%">
+            <h1 id="shop-hero-title" class="display shop-hero__title">Lo shop vive su Amioud Shopify.</h1>
+          </ClipMaskReveal>
+          <p class="shop-hero__sub" data-animate="fade-up">
+            Checkout, spedizioni, resi e promozioni restano sulla piattaforma ufficiale. Da qui si arriva in un clic.
+          </p>
+          <a href={shopifyHref('storeRoot')} class="cta-link shop-hero__cta" rel="noopener" data-animate="fade-up">
+            Vai allo shop Amioud
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shop-preview" aria-labelledby="shop-preview-title">
+      <div class="container shop-preview__head">
+        <p class="eyebrow" data-animate="fade-up">Violet Collection</p>
+        <h2 id="shop-preview-title" class="display shop-preview__title" data-animate="fade-up">Le tre fragranze.</h2>
+      </div>
+      <div class="container shop-preview__grid">
+        {fragrances.map((f, i) => (
+          <ClipMaskReveal
+            direction="up"
+            duration={0.8}
+            ease="power3.out"
+            delay={i * 0.06}
+            start="top 85%"
+            class="shop-preview__tile-wrap"
+          >
+            <article class="shop-preview__tile">
+              <div class="shop-preview__image">
+                <CutoutImage src={r(f.previewImage)} alt={`${f.name} — ${f.mood}`} shadow="soft" />
+              </div>
+              <h3 class="display shop-preview__name">{f.name}</h3>
+              <p class="shop-preview__mood"><em>{f.mood}</em></p>
+              <div class="shop-preview__actions">
+                <a href={r(`/fragranze/${f.slug}`)} class="cta-link cta-link--ghost">Scopri</a>
+                <a href={shopifyHref(f.shopifyKey)} class="cta-link" rel="noopener">Acquista</a>
+              </div>
+            </article>
+          </ClipMaskReveal>
+        ))}
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter site={site} />
+</BaseLayout>
+
+<script>
+  import '../scripts/scroll-animations';
+</script>
+
+<style>
+  .shop-hero {
+    padding-top: clamp(160px, 18vh, 220px);
+    padding-bottom: var(--space-xl);
+    background: var(--color-bg);
+  }
+  .shop-hero__grid {
+    display: grid;
+    place-items: center;
+  }
+  .shop-hero__copy {
+    text-align: center;
+    max-width: 36ch;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    align-items: center;
+  }
+  .shop-hero__title {
+    font-size: clamp(2.5rem, 7vw, 5.5rem);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+  }
+  .shop-hero__sub {
+    font-size: var(--text-lead);
+    color: var(--color-fg-muted);
+    line-height: 1.45;
+    max-width: 46ch;
+  }
+  .shop-hero__cta {
+    align-self: center;
+  }
+
+  .shop-preview {
+    background: var(--color-bg-card);
+  }
+  .shop-preview__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+  }
+  .shop-preview__title {
+    font-size: var(--text-h1);
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+  }
+  .shop-preview__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+  }
+  .shop-preview__tile {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .shop-preview__image {
+    max-width: 260px;
+  }
+  .shop-preview__name {
+    font-size: var(--text-h3);
+  }
+  .shop-preview__mood em {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: var(--fw-display-italic);
+    color: var(--color-fg-muted);
+    font-size: var(--text-sm);
+  }
+  .shop-preview__actions {
+    display: flex;
+    gap: var(--space-md);
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 820px) {
+    .shop-preview__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+  }
+</style>

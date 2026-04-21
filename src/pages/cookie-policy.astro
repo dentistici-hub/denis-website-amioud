@@ -1,0 +1,83 @@
+---
+/**
+ * /cookie-policy — placeholder GDPR cookie-policy page.
+ * Demo build: only technical cookies, no tracking.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteNav from '../components/SiteNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { site, nav, schema, legalLine } from '@data/site';
+---
+
+<BaseLayout
+  title="Cookie Policy"
+  description="Cookie Policy — Aura Company S.r.l. (Amioud)."
+  site={site}
+  schema={schema}
+>
+  <SiteNav brandName={site.name} links={nav} logoSrc="/images/logo.png" currentPath="/cookie-policy" />
+
+  <main class="legal">
+    <div class="container legal__inner">
+      <header class="legal__head">
+        <p class="eyebrow">Legale</p>
+        <h1 class="display legal__title">Cookie Policy.</h1>
+        <p class="legal__sub">
+          Questo sito di anteprima usa solo cookie tecnici. Nessun tracciamento.
+        </p>
+      </header>
+
+      <section class="prose legal__body">
+        <h2 class="display legal__h2">Titolare</h2>
+        <p>{legalLine}</p>
+
+        <h2 class="display legal__h2">Tipologie di cookie</h2>
+        <p>
+          Il sito amioud.com utilizza esclusivamente cookie tecnici necessari al funzionamento della
+          navigazione. Non sono presenti cookie di profilazione né strumenti di tracciamento pubblicitario.
+        </p>
+
+        <h2 class="display legal__h2">Disattivazione</h2>
+        <p>
+          I cookie tecnici non richiedono consenso preventivo. È possibile disabilitarli dalle
+          impostazioni del proprio browser, con l'avvertenza che alcune funzioni del sito potrebbero
+          non comportarsi come previsto.
+        </p>
+
+        <h2 class="display legal__h2">Contatti</h2>
+        <p>
+          Per chiarimenti, scrivere a <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>.
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <SiteFooter site={site} />
+</BaseLayout>
+
+<style>
+  .legal {
+    padding-top: clamp(140px, 16vh, 200px);
+    padding-bottom: var(--space-xl);
+    background: var(--color-bg);
+  }
+  .legal__inner { max-width: 64ch; }
+  .legal__head {
+    display: flex; flex-direction: column; gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+  }
+  .legal__title {
+    font-size: var(--text-h1); line-height: 1.02; letter-spacing: -0.015em;
+  }
+  .legal__sub { font-size: var(--text-body); color: var(--color-fg-muted); }
+  .legal__body a {
+    border-bottom: 1px solid var(--color-fg);
+    transition: color var(--duration-fast), border-color var(--duration-fast);
+  }
+  .legal__body a:hover { color: var(--color-accent); border-bottom-color: var(--color-accent); }
+  .legal__body p { margin-bottom: 1em; color: var(--color-fg-muted); }
+  .legal__h2 {
+    font-size: var(--text-h3); line-height: 1.1; margin-top: 2em; margin-bottom: 0.5em;
+    color: var(--color-fg);
+  }
+</style>

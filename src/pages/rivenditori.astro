@@ -1,0 +1,245 @@
+---
+/**
+ * /rivenditori — stockist / reseller page.
+ * Three blocks: hero intro → text "rete in crescita" → diventa-rivenditore form.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteNav from '../components/SiteNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import KenBurnsImage from '@motion/KenBurnsImage.astro';
+import ClipMaskReveal from '@motion/ClipMaskReveal.astro';
+import { site, nav, schema } from '@data/site';
+import { shopifyHref } from '@data/shopify-links';
+---
+
+<BaseLayout
+  title="Rivenditori"
+  description="Rete di profumerie selettive e saloni partner Amioud in Italia. Distribuzione curata da Roby Profumi."
+  site={site}
+  schema={schema}
+>
+  <SiteNav brandName={site.name} links={nav} logoSrc="/images/logo.png" currentPath="/rivenditori" />
+
+  <main>
+    <section class="riv-hero" aria-labelledby="riv-hero-title">
+      <div class="container riv-hero__grid">
+        <div class="riv-hero__copy">
+          <ClipMaskReveal direction="up" duration={0.9} ease="expo.out" start="top 85%">
+            <h1 id="riv-hero-title" class="display riv-hero__title">Dove trovare Amioud.</h1>
+          </ClipMaskReveal>
+          <p class="riv-hero__sub" data-animate="fade-up">
+            Profumerie selettive e saloni partner, selezionati uno a uno. Distribuzione italiana curata da Roby Profumi.
+          </p>
+          <a href="#form" class="cta-link riv-hero__cta" data-animate="fade-up">Diventa rivenditore</a>
+        </div>
+
+        <div class="riv-hero__image">
+          <KenBurnsImage
+            src="/images/rivenditori-hero.jpg"
+            alt="Officina Profumo Santa Maria Novella a Firenze — mensola di flaconi in vetro satinato"
+            direction="drift"
+            duration={28}
+            aspectRatio="4 / 5"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="section riv-list" aria-labelledby="riv-list-title">
+      <div class="container riv-list__grid">
+        <div class="riv-list__side">
+          <p class="eyebrow" data-animate="fade-up">Partner</p>
+          <h2 id="riv-list-title" class="display riv-list__title" data-animate="fade-up">Rete in crescita.</h2>
+        </div>
+        <div class="prose riv-list__body" data-animate-group="fade-up">
+          <p>
+            L'elenco dei punti vendita è in aggiornamento costante. Per verificare la disponibilità
+            presso una profumeria vicina, scrivere a <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section riv-form" id="form" aria-labelledby="riv-form-title">
+      <div class="container riv-form__grid">
+        <div class="riv-form__head" data-animate-group="fade-up">
+          <h2 id="riv-form-title" class="display riv-form__title">Diventa rivenditore.</h2>
+          <p class="riv-form__sub">
+            Profumerie selettive, saloni, concept store. Raccontaci il tuo spazio.
+          </p>
+        </div>
+
+        <form class="riv-form__form" action={shopifyHref('rivenditoriForm')} method="post" data-animate-group="fade-up">
+          <div class="riv-form__row">
+            <label class="riv-form__label" for="name">Nome e cognome</label>
+            <input class="riv-form__input" id="name" name="name" type="text" required />
+          </div>
+          <div class="riv-form__row">
+            <label class="riv-form__label" for="email">Email</label>
+            <input class="riv-form__input" id="email" name="email" type="email" required />
+          </div>
+          <div class="riv-form__row">
+            <label class="riv-form__label" for="business">Nome dell'attività</label>
+            <input class="riv-form__input" id="business" name="business" type="text" required />
+          </div>
+          <div class="riv-form__row">
+            <label class="riv-form__label" for="city">Città</label>
+            <input class="riv-form__input" id="city" name="city" type="text" required />
+          </div>
+          <div class="riv-form__row">
+            <label class="riv-form__label" for="message">Raccontaci il tuo spazio</label>
+            <textarea class="riv-form__input riv-form__input--area" id="message" name="message" rows="5" required></textarea>
+          </div>
+          <button type="submit" class="cta-link riv-form__submit">Invia richiesta</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter site={site} />
+</BaseLayout>
+
+<script>
+  import '../scripts/scroll-animations';
+</script>
+
+<style>
+  .riv-hero {
+    padding-top: clamp(120px, 16vh, 200px);
+    padding-bottom: var(--space-xl);
+    background: var(--color-bg);
+  }
+  .riv-hero__grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: var(--space-xl);
+    align-items: center;
+  }
+  .riv-hero__copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+  .riv-hero__title {
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+  }
+  .riv-hero__sub {
+    font-size: var(--text-lead);
+    color: var(--color-fg-muted);
+    max-width: 48ch;
+  }
+  .riv-hero__cta { align-self: start; }
+
+  .riv-list {
+    background: var(--color-bg-elevated);
+  }
+  .riv-list__grid {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+  .riv-list__side {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+  .riv-list__title {
+    font-size: var(--text-h1);
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+    max-width: 14ch;
+  }
+  .riv-list__body p {
+    font-size: var(--text-lead);
+    line-height: 1.55;
+  }
+  .riv-list__body a {
+    border-bottom: 1px solid var(--color-fg);
+    transition: border-color var(--duration-fast), color var(--duration-fast);
+  }
+  .riv-list__body a:hover { color: var(--color-accent); border-bottom-color: var(--color-accent); }
+
+  .riv-form { background: var(--color-bg); }
+  .riv-form__grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: var(--space-xl);
+    align-items: start;
+  }
+  .riv-form__head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    position: sticky;
+    top: 120px;
+  }
+  .riv-form__title {
+    font-size: var(--text-h1);
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+    max-width: 14ch;
+  }
+  .riv-form__sub {
+    font-size: var(--text-body);
+    color: var(--color-fg-muted);
+    max-width: 40ch;
+  }
+  .riv-form__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+  .riv-form__row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .riv-form__label {
+    font-family: var(--font-body);
+    font-weight: var(--fw-label);
+    font-size: var(--text-label);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-fg);
+  }
+  .riv-form__input {
+    border: none;
+    border-bottom: 1px solid var(--color-border-strong);
+    padding: 0.6rem 0;
+    background: transparent;
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    color: var(--color-fg);
+    transition: border-color var(--duration-fast);
+  }
+  .riv-form__input:focus {
+    border-bottom-color: var(--color-accent);
+    outline: none;
+  }
+  .riv-form__input--area { resize: vertical; min-height: 6rem; }
+  .riv-form__submit {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--color-fg);
+    align-self: start;
+    cursor: pointer;
+    padding: 0.4rem 0 0.3em;
+    font-family: var(--font-body);
+    font-weight: var(--fw-ui);
+    color: var(--color-fg);
+    font-size: var(--text-body);
+  }
+
+  @media (max-width: 820px) {
+    .riv-hero__grid,
+    .riv-list__grid,
+    .riv-form__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+    .riv-form__head { position: static; }
+  }
+</style>

@@ -1,0 +1,14 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "include": [".astro/types.d.ts", "**/*", "../../components/**/*"],
+  "exclude": ["dist"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["../../components/*"],
+      "@motion/*": ["../../components/motion-primitives/*"],
+      "@scripts/*": ["src/scripts/*"],
+      "@data/*": ["src/data/*"]
+    }
+  }
+}

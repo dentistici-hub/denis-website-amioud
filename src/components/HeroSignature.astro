@@ -1,0 +1,225 @@
+---
+/**
+ * HeroSignature — Amioud committed signature.
+ * concept.md §2 / motion-plan.md §1: video loops silently as atmospheric wash;
+ * at 12% viewport entry, ClipMaskReveal #1 brings the Cormorant claim.
+ * 200ms after that completes, ClipMaskReveal #2 brings the Amber Dusk bottle
+ * in CutoutImage. No button. The bottle IS the CTA.
+ *
+ *   - HeroVideo:              muted autoplay loop playsinline, NO scrubber, NO scrim CTA
+ *   - Claim ClipMaskReveal:   direction=up, duration=0.9, ease=expo.out, delay=0
+ *   - Bottle ClipMaskReveal:  direction=up, duration=0.9, ease=expo.out, delay=1.1s (0.9 reveal + 0.2 beat)
+ *   - CutoutImage:            Amber Dusk preview packshot, glow disabled (cream palette, no neon)
+ *   - Pull-quote:             Cormorant 300 italic — "Un profumo che non si indossa, si respira."
+ *
+ * Reduced-motion: video replaced by poster (handled by browser's `autoplay` behaviour on
+ * OS toggle) AND clip children render final-state via the primitive's own reduced-motion
+ * fallback. Claim + bottle + pull-quote are visible from first paint.
+ */
+import ClipMaskReveal from '@motion/ClipMaskReveal.astro';
+import CutoutImage from '@motion/CutoutImage.astro';
+
+interface Props {
+  videoSrc: string;
+  posterSrc: string;
+  eyebrow?: string;
+  headline: string;
+  subhead: string;
+  pullQuote: string;
+  bottleSrc: string;
+  bottleAlt: string;
+  bottleHref: string;
+}
+
+const {
+  videoSrc,
+  posterSrc,
+  eyebrow,
+  headline,
+  subhead,
+  pullQuote,
+  bottleSrc,
+  bottleAlt,
+  bottleHref,
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const r = (p: string) => (p.startsWith('/') ? `${base}${p}` : p);
+---
+
+<section class="hero-sig" aria-label="Amioud — Il primo Extrait de Parfum al mondo per capelli">
+  <video
+    class="hero-sig__video"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+    poster={r(posterSrc)}
+    aria-hidden="true"
+  >
+    <source src={r(videoSrc)} type="video/mp4" />
+  </video>
+  <div class="hero-sig__wash" aria-hidden="true"></div>
+
+  <div class="hero-sig__frame container">
+    {eyebrow && (
+      <p class="hero-sig__eyebrow eyebrow">{eyebrow}</p>
+    )}
+
+    {/* Why: signature ClipMaskReveal #1, claim — 900ms expo.out, no delay on in-view.
+        The mask lifts top→down, so the claim reads in reading-flow order. */}
+    <ClipMaskReveal direction="up" duration={0.9} ease="expo.out" delay={0} start="top 88%">
+      <h1 class="hero-sig__claim display">{headline}</h1>
+    </ClipMaskReveal>
+
+    {subhead && (
+      <p class="hero-sig__subhead" data-animate="fade-up">{subhead}</p>
+    )}
+
+    <div class="hero-sig__stage">
+      {/* Why: signature ClipMaskReveal #2, bottle — 900ms expo.out, delay 1.1s (0.9 claim + 0.2 beat).
+          The bottle is wrapped in a link: Variation A "bottle IS the CTA, no button chrome". */}
+      <a href={r(bottleHref)} class="hero-sig__bottle-link" aria-label={`${bottleAlt} — apri la scheda`}>
+        <ClipMaskReveal direction="up" duration={0.9} ease="expo.out" delay={1.1} start="top 88%">
+          <CutoutImage src={r(bottleSrc)} alt={bottleAlt} shadow="soft" maxWidth="32vw" />
+        </ClipMaskReveal>
+        <span class="hero-sig__bottle-hint">Amber Dusk</span>
+      </a>
+
+      {/* Why: pull-quote is Cormorant 300 italic, the through-line itself.
+          data-animate fade-up only (no clip-reveal stacked) — quiet third beat. */}
+      <p class="pull-quote hero-sig__pull-quote" data-animate="fade-up">
+        <em>{pullQuote}</em>
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-sig {
+    position: relative;
+    width: 100%;
+    min-height: 100svh;
+    overflow: hidden;
+    isolation: isolate;
+    background: var(--color-bg);
+    padding-top: clamp(120px, 16vh, 200px);
+    padding-bottom: var(--space-xl);
+  }
+
+  .hero-sig__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: var(--z-bg);
+    opacity: 0.88;
+  }
+
+  /* Cream wash — gradient #f6f4ef top → #fbfaf6 bottom, opacity 0.45 over video.
+     Per motion-plan.md §1, do NOT blur or desaturate the video itself. */
+  .hero-sig__wash {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-bg) 82%, transparent) 0%,
+      color-mix(in srgb, var(--color-bg-elevated) 58%, transparent) 50%,
+      color-mix(in srgb, var(--color-bg-elevated) 78%, transparent) 100%
+    );
+    z-index: calc(var(--z-bg) + 1);
+    pointer-events: none;
+  }
+
+  .hero-sig__frame {
+    position: relative;
+    z-index: var(--z-content);
+    display: grid;
+    gap: var(--space-lg);
+    min-height: 72svh;
+    padding-top: var(--space-md);
+  }
+
+  .hero-sig__eyebrow {
+    color: var(--color-fg-muted);
+  }
+
+  .hero-sig__claim {
+    font-size: var(--text-hero);
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+    max-width: 18ch;
+    color: var(--color-fg);
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  .hero-sig__subhead {
+    font-size: var(--text-lead);
+    line-height: 1.45;
+    color: var(--color-fg-muted);
+    max-width: 42ch;
+    margin: 0;
+  }
+
+  .hero-sig__stage {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: var(--space-lg);
+    align-items: end;
+    margin-top: var(--space-md);
+  }
+
+  .hero-sig__bottle-link {
+    display: block;
+    justify-self: end;
+    position: relative;
+    width: min(32vw, 360px);
+  }
+  .hero-sig__bottle-link:hover .hero-sig__bottle-hint {
+    border-bottom-color: var(--color-fg);
+    opacity: 1;
+  }
+
+  .hero-sig__bottle-hint {
+    display: block;
+    margin-top: 0.75rem;
+    font-family: var(--font-body);
+    font-weight: var(--fw-ui);
+    font-size: var(--text-sm);
+    letter-spacing: 0.04em;
+    text-align: center;
+    color: var(--color-fg);
+    opacity: 0.82;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 0.2em;
+    transition: opacity var(--duration-fast), border-color var(--duration-fast);
+    width: max-content;
+    margin-inline: auto;
+  }
+
+  .hero-sig__pull-quote {
+    font-size: clamp(1.4rem, 3vw, 2.1rem);
+    line-height: 1.2;
+    max-width: 24ch;
+    align-self: end;
+    color: var(--color-fg);
+  }
+
+  @media (max-width: 780px) {
+    .hero-sig__stage {
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+    .hero-sig__bottle-link {
+      width: min(70vw, 300px);
+      justify-self: center;
+    }
+    .hero-sig__pull-quote {
+      text-align: center;
+      margin-inline: auto;
+    }
+  }
+</style>
