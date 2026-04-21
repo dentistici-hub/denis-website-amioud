@@ -44,6 +44,26 @@ if (!prefersReducedMotion) {
   });
 
   ScrollTrigger.refresh();
+
+  // No-scroll failsafe: 2.5s after init, force every un-fired ScrollTrigger
+  // to its end state. Handles bots, crawlers, screenshot tools, users who
+  // never scroll, and hash-link jumps past triggers. Real users scrolling
+  // hit triggers long before this runs.
+  setTimeout(() => {
+    ScrollTrigger.getAll().forEach((st) => {
+      if (st.progress === 0 && !st.isActive) {
+        const anim = st.animation;
+        if (anim) anim.progress(1);
+      }
+    });
+    // Belt+braces: flip visibility on any element whose tween somehow missed.
+    document.querySelectorAll('[data-animate], [data-animate-group] > *').forEach((el) => {
+      const h = el as HTMLElement;
+      if (h.style.visibility !== 'visible') {
+        h.style.visibility = 'visible';
+      }
+    });
+  }, 2500);
 } else {
   // Reduced-motion — flip visibility, no animation
   document.querySelectorAll('[data-animate], [data-animate-group]').forEach((el) => {

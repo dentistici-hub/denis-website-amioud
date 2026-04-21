@@ -29,6 +29,12 @@ export interface Fragrance {
   shopSubhead: string;
   shopifyKey: ShopifyKey;          // productAmberDusk / Bubble / Midnight
   notes: NoteRow[];
+  /* Price chip shown on home shop-discovery block and shop preview tiles.
+     Format: Italian convention, euro, two decimals with comma.
+     Source: placeholder 85,00 EUR per revise-brief P1(4) — update when Shopify catalog
+     confirms real prices. Copy.md §6 forbids euro figures in long-form copy but the
+     chip is a product-discovery affordance, not editorial prose. */
+  price: string;                   // "€ 85,00"
 }
 
 export const fragrances: Fragrance[] = [
@@ -52,6 +58,7 @@ export const fragrances: Fragrance[] = [
     shopHeadline: 'Porta Amber Dusk con te.',
     shopSubhead:  'Lo shop è gestito su Amioud Shopify. Checkout, spedizioni e resi restano lì.',
     shopifyKey: 'productAmberDusk',
+    price: '\u20AC 85,00',
     notes: [
       {
         label: 'Note di testa',
@@ -90,6 +97,7 @@ export const fragrances: Fragrance[] = [
     shopHeadline: 'Porta Bubble Garden con te.',
     shopSubhead:  'Lo shop è gestito su Amioud Shopify. Checkout, spedizioni e resi restano lì.',
     shopifyKey: 'productBubbleGarden',
+    price: '\u20AC 85,00',
     notes: [
       {
         label: 'Note di testa',
@@ -128,6 +136,7 @@ export const fragrances: Fragrance[] = [
     shopHeadline: 'Porta Midnight in Florence con te.',
     shopSubhead:  'Lo shop è gestito su Amioud Shopify. Checkout, spedizioni e resi restano lì.',
     shopifyKey: 'productMidnightFlorence',
+    price: '\u20AC 85,00',
     notes: [
       {
         label: 'Note di testa',

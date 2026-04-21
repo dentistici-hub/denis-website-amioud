@@ -28,12 +28,17 @@ export const site: SiteConfig = {
 };
 
 /* Nav — single-word labels per type-system.md §6 copy-length guardrails.
-   CTA banned on Nav (nav-minimal variant per brief). */
+   CTA banned on Nav (nav-minimal variant per brief).
+   Shop (3) affordance (revise-brief P1(6)): the "(3)" is the static fragrance
+   count, a conversion-hint hybrid of item-count chip + quiet text link. It is
+   NOT a real cart counter (no cart backend on this bridge site). The numeral
+   shares the same Inter 600 uppercase letter-spaced treatment as the rest of
+   the nav — no second chrome. Shop is kept as the LAST nav item per brief. */
 export const nav: NavLink[] = [
   { label: 'Fragranze',    href: '/fragranze/amber-dusk' },
   { label: 'Visione',      href: '/visione' },
   { label: 'Rivenditori',  href: '/rivenditori' },
-  { label: 'Shop',         href: '/shop' },
+  { label: 'Shop (3)',     href: '/shop' },
 ];
 
 /* FAQ — surfaced in schema only; copy verbatim from brief.json.enriched_content.faq_pairs */

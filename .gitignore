@@ -33,3 +33,7 @@ cd-input/
 manual-assets/
 scraped-assets/
 critique-screenshots/
+
+# transient verification artifacts (keep curated evidence in boutique-inspiration/)
+_diag-*.jpg
+_diag-*.png

@@ -25,6 +25,8 @@ import SiteNav from '../components/SiteNav.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import HeroSignature from '../components/HeroSignature.astro';
 import FragrancePreview from '../components/FragrancePreview.astro';
+import FounderBlock from '../components/FounderBlock.astro';
+import ShopDiscovery from '../components/ShopDiscovery.astro';
 import ClipMaskReveal from '@motion/ClipMaskReveal.astro';
 import KenBurnsImage from '@motion/KenBurnsImage.astro';
 import { site, nav, schema } from '@data/site';
@@ -76,6 +78,13 @@ const description = site.description;
       </div>
     </section>
 
+    {/* ================= FOUNDER / ORIGIN BLOCK (revise P1(5) + P1(7)) ================= */}
+    {/* Editorial diptych — atmospheric client-owned image (visione-editorial-dopo.png)
+        + Cormorant 300 italic three-line stanza. Sits between brand-intro (34/66
+        sidebar-body) and fragrance-preview (asymmetric stagger) to vary the
+        layout grammar and give the founder story its own beat. */}
+    <FounderBlock />
+
     {/* ================= FRAGRANCE PREVIEW (staggered) ================= */}
     <FragrancePreview />
 
@@ -116,6 +125,13 @@ const description = site.description;
         </div>
       </div>
     </section>
+
+    {/* ================= SHOP DISCOVERY (revise P1(4)) ================= */}
+    {/* Product-discovery block — three square cards with name + price chip + "Vai al prodotto"
+        hairline link. Tight grid (NOT staggered) — reads as shop, not editorial.
+        Motion reused verbatim from motion-plan.md §7 fragrance-preview row
+        (ClipMaskReveal 800ms/power3.out/stagger 60ms). */}
+    <ShopDiscovery />
 
     {/* ================= QUIZ CTA ================= */}
     {/* Static: motion-plan.md §2 "conversion beat — zero motion, hairline underline only". */}

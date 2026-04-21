@@ -143,8 +143,26 @@ const config = JSON.stringify({ direction, duration, ease, delay, start, once })
           toggleActions: cfg.once ? 'play none none none' : 'play none none reverse',
           once: cfg.once,
         },
+        onComplete: () => { el.dataset.clipMaskRevealed = 'true'; },
       });
     });
+
+    // No-scroll failsafe: 2.5s after init, reveal any element whose
+    // ScrollTrigger hasn't fired (bot, crawler, screenshot tool, user who
+    // never scrolled, hash-link jump past the trigger). Real users scrolling
+    // hit the trigger long before this runs.
+    setTimeout(() => {
+      els.forEach((el) => {
+        if (el.dataset.clipMaskRevealed === 'true') return;
+        let cfg: ClipConfig;
+        try { cfg = JSON.parse(el.dataset.clipMask || '{}'); } catch { return; }
+        const toClip = CLIP_MAP[cfg.direction] || 'inset(0 0 0 0)';
+        gsap.to(el, {
+          clipPath: toClip, duration: 0.3, ease: 'power1.out',
+          onComplete: () => { el.dataset.clipMaskRevealed = 'true'; },
+        });
+      });
+    }, 2500);
   }
 
   if (document.readyState === 'loading') {
