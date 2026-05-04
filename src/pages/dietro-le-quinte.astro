@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteNav from '../components/SiteNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import TechnicalDisclosure from '@components/seo/TechnicalDisclosure.astro';
+import { site, nav, schema } from '@data/site';
+---
+
+<BaseLayout
+  title="Dietro le quinte"
+  description={`Documentazione tecnica del sito ${site.name} — SEO, indicizzazione AI, accessibilità, performance.`}
+  site={site}
+  schema={schema}
+>
+  <SiteNav brandName={site.name} links={nav} logoSrc="/images/logo.png" currentPath="/dietro-le-quinte" />
+
+  <main style="padding-top: 80px;">
+    <TechnicalDisclosure
+      site={site}
+      schema={schema}
+      starter="Restaurant starter (amioud bespoke)"
+    />
+  </main>
+
+  <SiteFooter site={site} />
+</BaseLayout>
